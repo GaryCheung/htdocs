@@ -4,7 +4,7 @@
 
 <div id="php100"></div>
 
-<canvas id="canvas1" width="300" height="300">
+<canvas id="canvas1" width="1200" height="600">
         Your web-browser does not support the HTML 5 canvas element.
 </canvas>
 
@@ -20,9 +20,12 @@ function get_data(){
 function byphp(){
 	var byphp100 = xmlhttp.responseText;
 	var data_deco = JSON.parse(byphp100);
-	var data = data_deco.slice(0,4);
-	var date = data_deco.slice(21,45);
-	alert(date);
+	var len = data_deco.length;
+	// alert(len);
+	var days = 10;
+	var data = data_deco.slice(0,days-1);
+	var date = data_deco.slice(len/2,len/2+days-1);
+	//alert(date);
     if(!!document.createElement('canvas').getContext){ //check that the canvas
                                                    // element is supported
     var mychart = new AwesomeChart('canvas1');
@@ -33,7 +36,7 @@ function byphp(){
 	}
 	//alert(data_deco.length);
 	//alert(typeof(data_deco));
-	document.getElementById('php100').innerHTML = byphp100;
+	//document.getElementById('php100').innerHTML = byphp100;
 
 }
 
