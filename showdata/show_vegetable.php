@@ -6,12 +6,17 @@
 	}
 
 	li{
-		width: 25%;
+		width: 20%;
+		margin: 3px;
 	}
 
 	.search{
 		text-align: center;
 		margin: 10px;
+	}
+
+	.input{
+		color:#ddd;
 	}
 	</style>
 </head>
@@ -24,7 +29,7 @@
 	</div>
 
 	<div class="search">
-	<form action="vegetabledata.php" method="post">
+	<form class="input" action="vegetabledata.php" method="post">
 		Vegetable name: <input type="text" name="vegetable" />
 		<input type="submit" value="Submit" />
 	</form>

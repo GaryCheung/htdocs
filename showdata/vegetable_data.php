@@ -13,7 +13,7 @@ mysql_query("set names utf8");
 
 
 $sql="select * from `vegetable` where vegetable like '{$vege}%'";
-# echo $sql;
+#echo $sql;
 $res=mysql_query($sql,$conn);
 #print_r(mysql_fetch_array($res));
 
@@ -26,6 +26,6 @@ while($row=mysql_fetch_row($res)){
 $finall = array_merge($price,$date);
 
 $json_string = json_encode($finall);
-print_r($json_string)
+print_r($json_string);
 
 ?>

@@ -4,6 +4,11 @@
 	.wrapper {
 		text-align: center;
 	}
+
+	.list{
+		margin: 10px;
+		list-style: none;
+	}
 	</style>
 </head>
 
@@ -12,13 +17,13 @@
 	
 	<div class="wrapper">
 		<ul>
-			<li>
+			<li class="list">
 				<a href="show.php" style="text-align:center;color:#ddd">Gold_Price</a>
 			</li>
-			<li>
+			<li class="list">
 				<a href="show_house.php" style="text-align:center;color:#ddd">House</a>
 			</li>
-			<li>
+			<li class="list">
 				<a href="show_vegetable.php" style="text-align:center;color:#ddd">Vegetable</a>
 			</li>
 		</ul>
