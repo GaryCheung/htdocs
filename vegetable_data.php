@@ -13,14 +13,14 @@ mysql_query("set names utf8");
 
 
 $sql="select * from `vegetable` where vegetable like '{$vege}%'";
-# echo $sql;
+echo $sql;
 $res=mysql_query($sql,$conn);
-#print_r(mysql_fetch_array($res));
+print_r(mysql_fetch_array($res));
 
 $j = 0;
 while($row=mysql_fetch_row($res)){
-	$price[$j] = $row[5];
-	$date[$j++] = $row[6]; 
+	$price[$j] = $row[0];
+	$date[$j++] = $row[1]; 
 }
 
 $finall = array_merge($price,$date);

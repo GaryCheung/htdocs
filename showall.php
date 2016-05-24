@@ -8,12 +8,20 @@
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Gold_Price_Trend</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">数据展示</h1>
+	
 	<div class="wrapper">
-		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
-	</div>
-	<div class="wrapper">
-		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
+		<ul>
+			<li>
+				<a href="show.php" style="text-align:center;color:#ddd">Gold_Price</a>
+			</li>
+			<li>
+				<a href="show_house.php" style="text-align:center;color:#ddd">House</a>
+			</li>
+			<li>
+				<a href="show_vegetable.php" style="text-align:center;color:#ddd">Vegetable</a>
+			</li>
+		</ul>
 	<div>
 		<canvas id="myChart" width="400" height="200"></canvas>
 	</div>

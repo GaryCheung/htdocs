@@ -9,9 +9,7 @@
 
 <body bgcolor="#32425c">
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Gold_Price_Trend</h1>
-	<div class="wrapper">
-		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
-	</div>
+	
 	<div class="wrapper">
 		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
 	<div>

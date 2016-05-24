@@ -1,3 +1,10 @@
+<?php
+
+$vege = $_GET['vege'];
+// echo $vege;
+
+?>
+
 <html>
 <head>
 	<style type='text/css'>
@@ -8,9 +15,10 @@
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Gold_Price_Trend</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $vege ?>价格走势</h1>
 	<div class="wrapper">
 		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="show_vegetable.php" style="text-align:center;color:#ddd">蔬菜列表页</a>
 	</div>
 	<div class="wrapper">
 		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
@@ -23,7 +31,7 @@
 	
 	function get_data(){
 		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","data.php",true);
+		xmlhttp.open("GET","vegetable_data.php",true);
 		xmlhttp.onreadystatechange = draw;
 		xmlhttp.send(null); 
 	}
@@ -32,6 +40,7 @@
 	function draw(){
 		var result = xmlhttp.responseText;
 		var data_deco = JSON.parse(result);
+		// window.alert(data_deco);
 		var len = data_deco.length;
 		var days = len;
 		var price = data_deco.slice(0,days-1);
@@ -40,7 +49,7 @@
 			labels: date,
 			datasets: [
 			{
-				label: "Gold Price Trend",
+				label: "蔬菜价格",
 				backgroundColor: "rgba(75,192,192,0.4)",
 				borderColor: "rgba(75,192,192,1)",
 				pointBorderColor: "rgba(75,192,192,1)",
