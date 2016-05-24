@@ -1,35 +1,28 @@
+<?php
+
+$stock = $_POST['stock'];
+// echo $vege;
+SetCookie("stock",$stock); 
+
+?>
+
 <html>
 <head>
 	<style type='text/css'>
 	.wrapper {
 		text-align: center;
 	}
-
-	.list{
-		margin: 10px;
-		list-style: none;
-	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">数据展示</h1>
-	
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>成交量走势</h1>
 	<div class="wrapper">
-		<ul>
-			<li class="list">
-				<a href="show.php" style="text-align:center;color:#ddd">Gold_Price</a>
-			</li>
-			<li class="list">
-				<a href="show_house.php" style="text-align:center;color:#ddd">House</a>
-			</li>
-			<li class="list">
-				<a href="show_vegetable.php" style="text-align:center;color:#ddd">Vegetable</a>
-			</li>
-			<li class="list">
-				<a href="show_stock.php" style="text-align:center;color:#ddd">Stock</a>
-			</li>
-		</ul>
+		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="show_stock.php" style="text-align:center;color:#ddd">股票列表页</a>
+	</div>
+	<div class="wrapper">
+		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
 	<div>
 		<canvas id="myChart" width="400" height="200"></canvas>
 	</div>
@@ -39,7 +32,7 @@
 	
 	function get_data(){
 		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","data.php",true);
+		xmlhttp.open("GET","stock_amplitude.php",true);
 		xmlhttp.onreadystatechange = draw;
 		xmlhttp.send(null); 
 	}
@@ -48,6 +41,7 @@
 	function draw(){
 		var result = xmlhttp.responseText;
 		var data_deco = JSON.parse(result);
+		// window.alert(data_deco);
 		var len = data_deco.length;
 		var days = len;
 		var price = data_deco.slice(0,days-1);
@@ -56,7 +50,7 @@
 			labels: date,
 			datasets: [
 			{
-				label: "Gold Price Trend",
+				label: "股票成交量",
 				backgroundColor: "rgba(75,192,192,0.4)",
 				borderColor: "rgba(75,192,192,1)",
 				pointBorderColor: "rgba(75,192,192,1)",
