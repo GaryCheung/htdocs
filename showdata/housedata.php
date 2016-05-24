@@ -14,6 +14,7 @@ SetCookie("cookie[layout]",$layout);
 	<style type='text/css'>
 	.wrapper {
 		text-align: center;
+		margin: 10px;
 	}
 	</style>
 </head>
@@ -25,6 +26,9 @@ SetCookie("cookie[layout]",$layout);
 	</div>
 	<div class="wrapper">
 		<a href="show_house.php" style="text-align:center;color:#ddd">房产信息页</a>
+	</div>
+	<div class="wrapper">
+		<a href="house_rent.php" style="text-align:center;color:#ddd">租房信息页</a>
 	</div>
 	<div class="wrapper">
 		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
@@ -45,7 +49,7 @@ SetCookie("cookie[layout]",$layout);
 
 	function draw(){
 		var result = xmlhttp.responseText;
-		window.alert(result);
+		// window.alert(result);
 		var data_deco = JSON.parse(result);
 		// window.alert(data_deco);
 		var len = data_deco.length;
