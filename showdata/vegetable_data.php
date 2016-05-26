@@ -1,7 +1,7 @@
 <?php
 
 $vege = $_COOKIE["vegetable"];
-#echo $vege;
+# echo $vege;
 
 $conn=mysql_connect("localhost","root","root");
 if(!$conn){

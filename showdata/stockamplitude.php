@@ -23,7 +23,7 @@ SetCookie("stock",$stock);
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>成交量走势</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>振幅走势</h1>
 	<div class="wrapper">
 		<ul class="list">
 			<li>

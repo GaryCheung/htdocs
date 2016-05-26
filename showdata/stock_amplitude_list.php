@@ -23,7 +23,7 @@
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Stock Trend</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">股票振幅</h1>
 
 	<div class="wrapper">
 		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>

@@ -1,8 +1,14 @@
 <?php
 
-$vege = $_GET['vege'];
-// echo $vege;
-setcookie("vegetable",$vege)
+$house = $_POST["house"];
+$bottom = $_POST["bottom"];
+$top = $_POST["top"];
+#echo $house;
+
+SetCookie("sell[house]",$house); 
+SetCookie("sell[areabottom]",$bottom); 
+SetCookie("sell[areatop]",$top); 
+#print_r($_COOKIE);
 
 ?>
 
@@ -11,18 +17,29 @@ setcookie("vegetable",$vege)
 	<style type='text/css'>
 	.wrapper {
 		text-align: center;
+		margin: 10px;
+	}
+
+	.link{
+		margin: 15px;
 	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $vege ?>价格走势</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">在售房源价格走势</h1>
 	<div class="wrapper">
 		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
-		<a href="show_vegetable.php" style="text-align:center;color:#ddd">蔬菜列表页</a>
 	</div>
 	<div class="wrapper">
-		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
+		<a href="show_house.php" style="text-align:center;color:#ddd">房产信息页</a>
+	</div>
+	<div class="wrapper">
+		<a href="house_sell.php" style="text-align:center;color:#ddd">在售房源信息页</a>
+	</div>
+	<div class="wrapper">
+		<a class="link" href="#" onclick="get_data()" style="text-align:center;color:#ddd">挂牌单价</a>
+		<a href="#" onclick="get_data_total()" style="text-align:center;color:#ddd">挂牌总价</a>
 	<div>
 		<canvas id="myChart" width="400" height="200"></canvas>
 	</div>
@@ -32,14 +49,21 @@ setcookie("vegetable",$vege)
 	
 	function get_data(){
 		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","vegetable_data.php",true);
+		xmlhttp.open("GET","house_sell_data.php",true);
 		xmlhttp.onreadystatechange = draw;
 		xmlhttp.send(null); 
 	}
 
+	function get_data_total(){
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","house_sell_data_total.php",true);
+		xmlhttp.onreadystatechange = draw;
+		xmlhttp.send(null); 
+	}
 
 	function draw(){
 		var result = xmlhttp.responseText;
+		// window.alert(result);
 		var data_deco = JSON.parse(result);
 		// window.alert(data_deco);
 		var len = data_deco.length;
@@ -50,7 +74,7 @@ setcookie("vegetable",$vege)
 			labels: date,
 			datasets: [
 			{
-				label: "蔬菜价格",
+				label: "挂牌价格",
 				backgroundColor: "rgba(75,192,192,0.4)",
 				borderColor: "rgba(75,192,192,1)",
 				pointBorderColor: "rgba(75,192,192,1)",
