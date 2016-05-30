@@ -1,8 +1,8 @@
 <?php
 
-$stock = $_POST['stock'];
-# echo $stock;
-SetCookie("stock",$stock); 
+$currency = $_GET['currency'];
+// echo $vege;
+SetCookie("currency",$currency); 
 
 ?>
 
@@ -23,29 +23,29 @@ SetCookie("stock",$stock);
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>成交量走势</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $currency ?>买入价走势</h1>
 	<div class="wrapper">
 		<ul class="list">
 			<li>
 				<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
 			</li>
 			<li>
-				<a href="stock_quantity_list.php" style="text-align:center;color:#ddd">股票列表页</a>
+				<a href="show_currency.php" style="text-align:center;color:#ddd">汇率列表页</a>
 			</li>
 		</ul>
 	</div>
 	<div class="wrapper">
-		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
+		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">生成趋势图</a>
 		<div>
 			<canvas id="myChart" width="400" height="200"></canvas>
 		</div>
 
 		<script src="Chart.js"></script>
 		<script>
-		
+
 		function get_data(){
 			xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET","stock_quantity_stockstar.php",true);
+			xmlhttp.open("GET","currencychosen.php",true);
 			xmlhttp.onreadystatechange = draw;
 			xmlhttp.send(null); 
 		}
@@ -63,7 +63,7 @@ SetCookie("stock",$stock);
 			labels: date,
 			datasets: [
 			{
-				label: "股票成交量",
+				label: "现钞买入价",
 				backgroundColor: "rgba(75,192,192,0.4)",
 				borderColor: "rgba(75,192,192,1)",
 				pointBorderColor: "rgba(75,192,192,1)",

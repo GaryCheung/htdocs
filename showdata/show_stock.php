@@ -19,10 +19,16 @@
 			<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
 		</li>
 		<li class="list">
-			<a href="stock_quantity_list.php" style="text-align:center;color:#ddd">股票成交量</a>
+			<a href="stock_quantity_list.php" style="text-align:center;color:#ddd">雪球股票成交量</a>
 		</li>
 		<li class="list">
-			<a href="stock_amplitude_list.php" style="text-align:center;color:#ddd">股票振幅</a>
+			<a href="stock_amplitude_list.php" style="text-align:center;color:#ddd">雪球股票振幅</a>
+		</li>
+		<li class="list">
+			<a href="stock_quantity_list_stockstar.php" style="text-align:center;color:#ddd">股票之星股票成交量</a>
+		</li>
+		<li class="list">
+			<a href="stock_amplitude_list_stockstar.php" style="text-align:center;color:#ddd">股票之星股票振幅</a>
 		</li>
 	</ul>
 

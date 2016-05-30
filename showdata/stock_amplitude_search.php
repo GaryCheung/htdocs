@@ -32,7 +32,7 @@ SetCookie("stock",$stock);
 	
 	function get_data(){
 		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","stock_amplitude.php",true);
+		xmlhttp.open("GET","stock_amplitude_stockstar.php",true);
 		xmlhttp.onreadystatechange = draw;
 		xmlhttp.send(null); 
 	}

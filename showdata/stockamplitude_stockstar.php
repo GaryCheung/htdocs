@@ -1,7 +1,7 @@
 <?php
 
-$stock = $_POST['stock'];
-# echo $stock;
+$stock = $_GET['stock'];
+// echo $vege;
 SetCookie("stock",$stock); 
 
 ?>
@@ -23,14 +23,14 @@ SetCookie("stock",$stock);
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>成交量走势</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>振幅走势</h1>
 	<div class="wrapper">
 		<ul class="list">
 			<li>
 				<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
 			</li>
 			<li>
-				<a href="stock_quantity_list.php" style="text-align:center;color:#ddd">股票列表页</a>
+				<a href="stock_amplitude_list_stockstar.php" style="text-align:center;color:#ddd">股票列表页</a>
 			</li>
 		</ul>
 	</div>
@@ -42,10 +42,10 @@ SetCookie("stock",$stock);
 
 		<script src="Chart.js"></script>
 		<script>
-		
+
 		function get_data(){
 			xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET","stock_quantity_stockstar.php",true);
+			xmlhttp.open("GET","stock_amplitude_stockstar.php",true);
 			xmlhttp.onreadystatechange = draw;
 			xmlhttp.send(null); 
 		}

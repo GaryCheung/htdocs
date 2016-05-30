@@ -1,3 +1,11 @@
+<?php
+
+$currency = $_POST['currency'];
+# echo $currency;
+SetCookie("currency",$currency); 
+
+?>
+
 <html>
 <head>
 	<style type='text/css'>
@@ -6,33 +14,28 @@
 	}
 
 	.list{
-		margin: 10px;
+		text-align: center;
+		margin: 5px;
 		list-style: none;
+		padding: 5px;
 	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">数据展示</h1>
-	
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">现钞卖出价格</h1>
 	<div class="wrapper">
-		<ul>
-			<li class="list">
-				<a href="show.php" style="text-align:center;color:#ddd">金价</a>
+		<ul class="list">
+			<li>
+				<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
 			</li>
-			<li class="list">
-				<a href="show_house.php" style="text-align:center;color:#ddd">房产信息</a>
-			</li>
-			<li class="list">
-				<a href="show_vegetable.php" style="text-align:center;color:#ddd">菜价</a>
-			</li>
-			<li class="list">
-				<a href="show_stock.php" style="text-align:center;color:#ddd">股票</a>
-			</li>
-			<li class="list">
-				<a href="show_currency.php" style="text-align:center;color:#ddd">汇率</a>
+			<li>
+				<a href="show_currency.php" style="text-align:center;color:#ddd">汇率列表页</a>
 			</li>
 		</ul>
+	</div>
+	<div class="wrapper">
+		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">生成趋势图</a>
 	<div>
 		<canvas id="myChart" width="400" height="200"></canvas>
 	</div>
@@ -42,7 +45,7 @@
 	
 	function get_data(){
 		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","data.php",true);
+		xmlhttp.open("GET","currencysellchosen.php",true);
 		xmlhttp.onreadystatechange = draw;
 		xmlhttp.send(null); 
 	}
@@ -50,7 +53,9 @@
 
 	function draw(){
 		var result = xmlhttp.responseText;
+		// window.alert(result);
 		var data_deco = JSON.parse(result);
+		// window.alert(data_deco);
 		var len = data_deco.length;
 		var days = len;
 		var price = data_deco.slice(0,days-1);
@@ -59,7 +64,7 @@
 			labels: date,
 			datasets: [
 			{
-				label: "Gold Price Trend",
+				label: "卖出价格",
 				backgroundColor: "rgba(75,192,192,0.4)",
 				borderColor: "rgba(75,192,192,1)",
 				pointBorderColor: "rgba(75,192,192,1)",
