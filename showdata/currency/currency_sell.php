@@ -26,7 +26,7 @@
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">汇率走势</h1>
 
 	<div class="wrapper">
-		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 	</div>
 	<div class="wrapper">
 		<a href="show_currency.php" style="text-align:center;color:#ddd">汇率首页</a>

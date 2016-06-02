@@ -16,7 +16,7 @@
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Stock Infomation</h1>
 	<ul class="list">
 		<li class="list">
-			<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+			<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 		</li>
 		<li class="list">
 			<a href="stock_quantity_list.php" style="text-align:center;color:#ddd">雪球股票成交量</a>

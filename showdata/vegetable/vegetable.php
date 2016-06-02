@@ -1,8 +1,8 @@
 <?php
 
-$vege = $_POST['vegetable'];
-# echo $vege;
-SetCookie("vegetable",$vege); 
+$vege = $_GET['vege'];
+// echo $vege;
+setcookie("vegetable",$vege)
 
 ?>
 
@@ -11,14 +11,20 @@ SetCookie("vegetable",$vege);
 	<style type='text/css'>
 	.wrapper {
 		text-align: center;
+		margin-bottom: 10px;
+	}
+
+	.lianjie{
+		margin-top: 10px;
 	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Vegetable_Price_Trend</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $vege ?>价格走势</h1>
 	<div class="wrapper">
-		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="/showdata/showall.php" style="text-align:center;color:#ddd" class="lianjie">首页</a></br>
+		<a href="show_vegetable.php" style="text-align:center;color:#ddd" class="lianjie">蔬菜列表页</a>
 	</div>
 	<div class="wrapper">
 		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
@@ -39,7 +45,6 @@ SetCookie("vegetable",$vege);
 
 	function draw(){
 		var result = xmlhttp.responseText;
-		// window.alert(result);
 		var data_deco = JSON.parse(result);
 		// window.alert(data_deco);
 		var len = data_deco.length;

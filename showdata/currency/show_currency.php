@@ -16,7 +16,7 @@
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">汇率信息</h1>
 	<ul class="list">
 		<li class="list">
-			<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+			<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 		</li>
 		<li class="list">
 			<a href="currency_buy.php" style="text-align:center;color:#ddd">买入汇率</a>

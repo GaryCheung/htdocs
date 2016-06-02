@@ -16,7 +16,7 @@
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">House Infomation</h1>
 	<ul class="list">
 		<li class="list">
-			<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+			<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 		</li>
 		<li class="list">
 			<a href="house_rent.php" style="text-align:center;color:#ddd">租房信息</a>
