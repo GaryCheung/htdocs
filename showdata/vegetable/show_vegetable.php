@@ -3,6 +3,7 @@
 	<style type='text/css'>
 	.wrapper {
 		text-align: center;
+		margin-top: 10px;
 	}
 
 	li{
@@ -25,9 +26,11 @@
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Vegetable_Price</h1>
 
 	<div class="wrapper">
-		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 	</div>
-
+	<div class="wrapper">
+		<a href="vegetable_sale.php" style="text-align:center;color:#ddd">降价蔬菜</a>
+	</div>
 	<div class="search">
 	<form class="input" action="vegetabledata.php" method="post">
 		Vegetable name: <input type="text" name="vegetable" />
@@ -343,4 +346,4 @@
 				<a href="vegetable.php?vege=牛下脚" style="text-align:center;color:#ddd">牛下脚</a>
 			</li>
 		</ul>
-	<div>
+	</div>

@@ -18,19 +18,19 @@
 	<div class="wrapper">
 		<ul>
 			<li class="list">
-				<a href="show.php" style="text-align:center;color:#ddd">金价</a>
+				<a href="./gold/show.php" style="text-align:center;color:#ddd">金价</a>
 			</li>
 			<li class="list">
-				<a href="show_house.php" style="text-align:center;color:#ddd">房产信息</a>
+				<a href="./house/show_house.php" style="text-align:center;color:#ddd">房产信息</a>
 			</li>
 			<li class="list">
-				<a href="show_vegetable.php" style="text-align:center;color:#ddd">菜价</a>
+				<a href="./vegetable/show_vegetable.php" style="text-align:center;color:#ddd">菜价</a>
 			</li>
 			<li class="list">
-				<a href="show_stock.php" style="text-align:center;color:#ddd">股票</a>
+				<a href="./stock/show_stock.php" style="text-align:center;color:#ddd">股票</a>
 			</li>
 			<li class="list">
-				<a href="show_currency.php" style="text-align:center;color:#ddd">汇率</a>
+				<a href="./currency/show_currency.php" style="text-align:center;color:#ddd">汇率</a>
 			</li>
 		</ul>
 	<div>

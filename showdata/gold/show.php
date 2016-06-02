@@ -1,34 +1,17 @@
-<?php
-
-$house = $_POST['house'];
-$layout = $_POST['layout'];
-# echo $house;
-SetCookie("cookie[house]",$house); 
-SetCookie("cookie[layout]",$layout); 
-# print_r($_COOKIE);
-
-?>
-
 <html>
 <head>
 	<style type='text/css'>
 	.wrapper {
 		text-align: center;
-		margin: 10px;
+		margin-bottom: 10px;
 	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">租金走势</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">Gold_Price_Trend</h1>
 	<div class="wrapper">
-		<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
-	</div>
-	<div class="wrapper">
-		<a href="show_house.php" style="text-align:center;color:#ddd">房产信息页</a>
-	</div>
-	<div class="wrapper">
-		<a href="house_rent.php" style="text-align:center;color:#ddd">租房信息页</a>
+		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 	</div>
 	<div class="wrapper">
 		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
@@ -41,7 +24,7 @@ SetCookie("cookie[layout]",$layout);
 	
 	function get_data(){
 		xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET","house_data.php",true);
+		xmlhttp.open("GET","data.php",true);
 		xmlhttp.onreadystatechange = draw;
 		xmlhttp.send(null); 
 	}
@@ -49,9 +32,7 @@ SetCookie("cookie[layout]",$layout);
 
 	function draw(){
 		var result = xmlhttp.responseText;
-		// window.alert(result);
 		var data_deco = JSON.parse(result);
-		// window.alert(data_deco);
 		var len = data_deco.length;
 		var days = len;
 		var price = data_deco.slice(0,days-1);
@@ -60,7 +41,7 @@ SetCookie("cookie[layout]",$layout);
 			labels: date,
 			datasets: [
 			{
-				label: "房租价格",
+				label: "Gold Price Trend",
 				backgroundColor: "rgba(75,192,192,0.4)",
 				borderColor: "rgba(75,192,192,1)",
 				pointBorderColor: "rgba(75,192,192,1)",

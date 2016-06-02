@@ -1,7 +1,7 @@
 <?php
 
 $stock = $_POST['stock'];
-# echo $stock;
+// echo $vege;
 SetCookie("stock",$stock); 
 
 ?>
@@ -12,48 +12,35 @@ SetCookie("stock",$stock);
 	.wrapper {
 		text-align: center;
 	}
-
-	.list{
-		text-align: center;
-		margin: 5px;
-		list-style: none;
-		padding: 5px;
-	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
 	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px"><?php echo $stock ?>成交量走势</h1>
 	<div class="wrapper">
-		<ul class="list">
-			<li>
-				<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
-			</li>
-			<li>
-				<a href="stock_quantity_list_stockstar.php" style="text-align:center;color:#ddd">股票列表页</a>
-			</li>
-		</ul>
+		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="show_stock.php" style="text-align:center;color:#ddd">股票列表页</a>
 	</div>
 	<div class="wrapper">
 		<a href="#" onclick="get_data()" style="text-align:center;color:#ddd">draw_line_chart</a>
-		<div>
-			<canvas id="myChart" width="400" height="200"></canvas>
-		</div>
+	<div>
+		<canvas id="myChart" width="400" height="200"></canvas>
+	</div>
 
-		<script src="Chart.js"></script>
-		<script>
-		
-		function get_data(){
-			xmlhttp = new XMLHttpRequest();
-			xmlhttp.open("GET","stock_quantity_stockstar.php",true);
-			xmlhttp.onreadystatechange = draw;
-			xmlhttp.send(null); 
-		}
+	<script src="Chart.js"></script>
+	<script>
+	
+	function get_data(){
+		xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET","stock_amplitude_stockstar.php",true);
+		xmlhttp.onreadystatechange = draw;
+		xmlhttp.send(null); 
+	}
 
 
-		function draw(){
-			var result = xmlhttp.responseText;
-			var data_deco = JSON.parse(result);
+	function draw(){
+		var result = xmlhttp.responseText;
+		var data_deco = JSON.parse(result);
 		// window.alert(data_deco);
 		var len = data_deco.length;
 		var days = len;
