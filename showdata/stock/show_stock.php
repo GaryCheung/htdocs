@@ -8,7 +8,10 @@
 	}
 
 
-
+	.wrap{
+		margin-left:49%;
+		margin-top: 20px;
+	}
 	</style>
 </head>
 
@@ -31,6 +34,10 @@
 			<a href="stock_amplitude_list_stockstar.php" style="text-align:center;color:#ddd">股票之星股票振幅</a>
 		</li>
 	</ul>
+
+	<div class="wrap">
+		<a href="tobuy.php" style="text-align:center;color:#ddd">备选股票</a>
+	</div>
 
 	
 	
