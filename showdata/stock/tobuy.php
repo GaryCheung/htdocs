@@ -65,6 +65,7 @@ while ($row=mysql_fetch_row($res)){
 	$max_amplitude[$name] = $row[2];
 	#print($stock_date);
 	$max_amplitude_date[$name] = $row[4];
+	$stock_name[$name] = $row[1];
 	#echo $amplitude[$name],$amplitude['date'];
 	#print($max_amplitude['date']);
 	#print($max_amplitude[$name]);
@@ -102,9 +103,20 @@ $length = count($max_amplitude);
 #print($max_amplitude['皖能电力(SZ:000543)']);
 #print_r($max_amplitude);
 $total = 0;
+
+
+$today = date("Y-m-d");
+$sql = "delete from analysis where date = '$today'";
+mysql_query($sql,$conn);
+
 foreach ($max_amplitude_date as $key=>$value){
 	if ($max_amplitude_date[$key] == $amplitude_date[$key]){
+		$sql = "insert into analysis (name, date) values ('$stock_name[$key]', '$today')";
+		#echo $sql;
+		mysql_query($sql,$conn);
 		$total++;
+		#print($stock_name[$key]);
+		#echo "-------";
 	}
 }
 echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $total 支股票</p>";
@@ -120,6 +132,8 @@ foreach ($max_amplitude_date as $key=>$value){
 		echo "<li class='show'><a href='stock_amplitude_list.php' style='color:#ddd'>$key</a></li>";
 	}
 }
+
+
 ?>
 
 </body>
