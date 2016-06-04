@@ -39,7 +39,7 @@
 <?php
 
 $day = 10;
-$begin = 1;
+$begin = 0;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
