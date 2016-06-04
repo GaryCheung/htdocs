@@ -3,7 +3,7 @@
 $currency = $_COOKIE["currency"];
 # echo $currency;
 
-$conn=mysql_connect("localhost","root","root");
+$conn=mysql_connect("localhost","root","19860112");
 if(!$conn){
 	echo "连接失败";
 }

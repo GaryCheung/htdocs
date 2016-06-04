@@ -46,7 +46,7 @@ $prensent_date = date("Y-m-d");
 $yesterday = date("Y-m-d",strtotime("-1 day"));
 #print($yesterday);
 
-$conn=mysql_connect("localhost","root","root");
+$conn=mysql_connect("localhost","root","19860112");
 if(!$conn){
 	echo "连接失败";
 }
