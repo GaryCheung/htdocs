@@ -27,7 +27,7 @@ SetCookie("stock",$stock);
 	<div class="wrapper">
 		<ul class="list">
 			<li>
-				<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+				<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 			</li>
 			<li>
 				<a href="stock_quantity_list_stockstar.php" style="text-align:center;color:#ddd">股票列表页</a>

@@ -14,8 +14,8 @@ $res=mysql_query($sql,$conn);
 
 $j = 0;
 while($row=mysql_fetch_row($res)){
-	$data[$j] = $row[2];
-	$date[$j++] = $row[1]; 
+	$data[$j] = $row[1];
+	$date[$j++] = $row[3]; 
 }
 
 $finall = array_merge($data,$date);
