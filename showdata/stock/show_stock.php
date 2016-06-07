@@ -12,6 +12,11 @@
 		margin-left:49%;
 		margin-top: 20px;
 	}
+
+	.wrap1{
+		margin-left:48%;
+		margin-top: 10px;
+	}
 	</style>
 </head>
 
@@ -38,7 +43,9 @@
 	<div class="wrap">
 		<a href="tobuy.php" style="text-align:center;color:#ddd">备选股票</a>
 	</div>
-
+	<div class="wrap1">
+		<a href="goldenx.php" style="text-align:center;color:#ddd">上穿五日均线</a>
+	</div>
 	
 	
 

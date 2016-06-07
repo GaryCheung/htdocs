@@ -38,6 +38,8 @@
 
 <?php
 
+#echo date("l");
+
 $day = 10;
 $begin = 0;
 for ($i=$begin;$i<$day;$i++){

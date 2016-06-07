@@ -1,0 +1,129 @@
+<html>
+<head>
+	<style type='text/css'>
+	.wrapper {
+		text-align: center;
+	}
+
+	li{
+		width: 20%;
+		margin: 3px;
+	}
+
+	.search{
+		text-align: center;
+		margin: 10px;
+	}
+
+	.input{
+		color:#ddd;
+	}
+
+	.show{
+		list-style: none;
+		text-align: center;
+		margin-left: 40%;
+		margin-top: 10px;
+		color:#ddd;
+	}
+	</style>
+</head>
+
+<body bgcolor="#32425c">
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">上穿5日线的股票</h1>
+
+	<div class="wrapper">
+		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
+	</div>
+
+<?php
+
+#echo date("l");
+
+$day = 12;
+$begin = 0;
+for ($i=$begin;$i<$day;$i++){
+	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
+}
+#print_r($date_array);
+
+
+$conn=mysql_connect("localhost","root","root");
+if(!$conn){
+	echo "连接失败";
+}
+
+mysql_select_db("stock",$conn);
+mysql_query("set names utf8");
+
+$sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
+print($sql);
+
+$res = mysql_query($sql,$conn);
+#print($res);
+while($row = mysql_fetch_row($res)){
+	#print($row);
+	$name = $row[1];
+	$price[$name] = 0;
+	# echo $price[$name];
+}
+
+$ma5 = 0;
+while ($ma5 <= 4){
+	$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
+	echo $sql;
+	$res = mysql_query($sql,$conn);
+	while($row = mysql_fetch_row($res)){
+		if ($row[10] != 'Sunday' && $row[10] != 'Saturday'){
+		$name = $row[1];
+		$temp = (float)$row[7]; 
+		$price[$name] += $temp;
+		echo $price[$name];
+		$ma5++;
+		}
+	$begin++;
+	}
+		#if ($row[10] == $tmp){echo "yes!!"}}
+		#if ($row[10] != 'Sunday' && $row[10] != 'Saturday'){
+			#echo "No"}}}
+			/*
+			$name = $row[1];	
+			$price[$name] += $row[7];	
+			echo $name;
+			echo $price[$name];}}
+			/*
+			$ma5++;	
+		}
+	echo $ma5;
+	$begin++;
+	}
+/*
+$today = date("Y-m-d");
+#$sql = "delete from analysis where date = '$today'";
+#mysql_query($sql,$conn);
+
+$total = 0;
+$sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
+$res = mysql_query($sql,$conn);
+while($row=mysql_fetch_row($res)){
+	$name = $row[1];
+	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
+		$total++;
+	}
+}
+
+echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $total 支股票</p>";
+
+$sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
+$res = mysql_query($sql,$conn);
+while($row=mysql_fetch_row($res)){
+	$name = $row[1];
+	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
+		echo "<li class='show'><a href='stock_amplitude_list.php' style='color:#ddd'>$key</a></li>";
+	}
+}
+*/
+
+?>
+</body>
+</html>
