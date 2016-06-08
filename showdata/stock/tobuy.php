@@ -113,7 +113,7 @@ mysql_query($sql,$conn);
 
 foreach ($max_amplitude_date as $key=>$value){
 	if ($max_amplitude_date[$key] == $amplitude_date[$key]){
-		$sql = "insert into analysis (name, date) values ('$stock_name[$key]', '$today')";
+		$sql = "insert into analysis (name, date, reason) values ('$stock_name[$key]', '$today', 'amplitude')";
 		#echo $sql;
 		mysql_query($sql,$conn);
 		$total++;

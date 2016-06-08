@@ -57,7 +57,7 @@ mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
 
 $sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
-print($sql);
+# print($sql);
 
 $res = mysql_query($sql,$conn);
 #print($res);
@@ -69,34 +69,58 @@ while($row = mysql_fetch_row($res)){
 }
 
 $ma5 = 0;
-while ($ma5 <= 4){
+$flag = 0;
+while ($ma5 <= 3){
 	$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
-	echo $sql;
+	#echo $sql;
 	$res = mysql_query($sql,$conn);
 	while($row = mysql_fetch_row($res)){
 		if ($row[10] != 'Sunday' && $row[10] != 'Saturday'){
 		$name = $row[1];
 		$temp = (float)$row[7]; 
 		$price[$name] += $temp;
-		echo $price[$name];
+		#echo $price[$name];
+		$flag = 1;
+		}
+	}
+	if ($flag == 1){
 		$ma5++;
-		}
-	$begin++;
 	}
-		#if ($row[10] == $tmp){echo "yes!!"}}
-		#if ($row[10] != 'Sunday' && $row[10] != 'Saturday'){
-			#echo "No"}}}
-			/*
-			$name = $row[1];	
-			$price[$name] += $row[7];	
-			echo $name;
-			echo $price[$name];}}
-			/*
-			$ma5++;	
-		}
-	echo $ma5;
 	$begin++;
+	#echo 'begin--------------------------------';
+	#echo $begin;
+}
+
+#echo $date_array[0];
+$total = 0;
+$sql="select * from `stock_data` where date = '$date_array[0]' and source = 'xueqiu' ";
+#echo $sql;
+
+$res = mysql_query($sql,$conn);
+while($row = mysql_fetch_row($res)){
+	$name = $row[1]; 
+	#echo 'price[name]	',$price[$name];
+	#echo 'row[7]	',$row[7];
+	#echo 'row[6]	',$row[6];
+	#echo '----------------------';
+	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
+		$total++;
+		#echo $total;
 	}
+}
+
+echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $total 支股票</p>";
+
+$sql = "select * from `stock_data` where date = '$date_array[0]' and source = 'xueqiu' ";
+$res = mysql_query($sql,$conn);
+while($row=mysql_fetch_row($res)){
+	$name = $row[1];
+	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
+		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$name</a></li>";
+	}
+}
+
+
 /*
 $today = date("Y-m-d");
 #$sql = "delete from analysis where date = '$today'";
