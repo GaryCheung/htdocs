@@ -20,7 +20,7 @@
 	}
 
 	.show{
-		margin:15%;
+		margin-left:40px;
 	}
 	</style>
 </head>
@@ -60,12 +60,10 @@ $sql1="select * from `vegetable` where date = '$yesterday'";
 $res_yesterday=mysql_query($sql1,$conn);
 #print_r(mysql_fetch_array($res));
 
-$j = 0;
 while($row=mysql_fetch_row($res_yesterday)){
-	$name_yesterday[$j] = $row[2];
-	$price_yesterday[$j] = $row[5]; 
+	$name_yesterday = $row[2];
+	$price_yesterday[$name_yesterday] = $row[5]; 
 	#echo $name_yesterday[$j],$price_yesterday[$j];
-	$j++;
 }
 
 $sql2="select * from `vegetable` where date = '$prensent_date'";
@@ -73,21 +71,21 @@ $sql2="select * from `vegetable` where date = '$prensent_date'";
 $res_today=mysql_query($sql2,$conn);
 #print_r(mysql_fetch_array($res));
 
-$j = 0;
 while($row=mysql_fetch_row($res_today)){
-	$name_today[$j] = $row[2];
-	$price_today[$j] = $row[5]; 
+	$name_today = $row[2];
+	$name_today_total[$j++] = $row[2];
+	$price_today[$name_today] = $row[5]; 
 	#echo $name_today[$j],$price_today[$j];
-	$j++;
 }
 
-$length = count($name_today);
+$length = count($name_today_total);
 #echo $length;
 
 
 for ($i=0; $i<$length; $i++){
-	if ($price_today[$i] < $price_yesterday[$i]){	
-		echo "<a href='vegetable.php?vege=$name_today[$i]' style='text-align:center;color:#ddd' class='show'>$name_today[$i]</a>";
+	$name = $name_today_total[$i];
+	if ($price_today[$name] < $price_yesterday[$name]){	
+		echo "<a href='vegetable.php?vege=$name_today_total[$i]' style='text-align:center;color:#ddd' class='show'>$name,$price_today[$name]-----$price_yesterday[$name]</a>";
 	}
 }	
 

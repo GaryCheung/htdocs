@@ -41,7 +41,7 @@
 #echo date("l");
 
 $day = 12;
-$begin = 0;
+$begin = 1;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
@@ -57,7 +57,7 @@ mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
 
 $sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
-# print($sql);
+#print($sql);
 
 $res = mysql_query($sql,$conn);
 #print($res);
@@ -70,8 +70,10 @@ while($row = mysql_fetch_row($res)){
 
 $ma5 = 0;
 $flag = 0;
-while ($ma5 <= 3){
+$period = 3;
+while ($ma5 <= $period){
 	$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
+	$flag = 0;
 	#echo $sql;
 	$res = mysql_query($sql,$conn);
 	while($row = mysql_fetch_row($res)){
@@ -85,6 +87,7 @@ while ($ma5 <= 3){
 	}
 	if ($flag == 1){
 		$ma5++;
+		#echo $ma5;
 	}
 	$begin++;
 	#echo 'begin--------------------------------';
@@ -119,34 +122,6 @@ while($row=mysql_fetch_row($res)){
 		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$name</a></li>";
 	}
 }
-
-
-/*
-$today = date("Y-m-d");
-#$sql = "delete from analysis where date = '$today'";
-#mysql_query($sql,$conn);
-
-$total = 0;
-$sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
-$res = mysql_query($sql,$conn);
-while($row=mysql_fetch_row($res)){
-	$name = $row[1];
-	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
-		$total++;
-	}
-}
-
-echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $total 支股票</p>";
-
-$sql = "select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
-$res = mysql_query($sql,$conn);
-while($row=mysql_fetch_row($res)){
-	$name = $row[1];
-	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
-		echo "<li class='show'><a href='stock_amplitude_list.php' style='color:#ddd'>$key</a></li>";
-	}
-}
-*/
 
 ?>
 </body>
