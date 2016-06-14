@@ -41,7 +41,7 @@
 #echo date("l");
 
 $day = 12;
-$begin = 1;
+$begin = 0;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
@@ -70,7 +70,7 @@ while($row = mysql_fetch_row($res)){
 
 $ma5 = 0;
 $flag = 0;
-$period = 3;
+$period = 5;
 while ($ma5 <= $period){
 	$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
 	$flag = 0;
@@ -106,7 +106,7 @@ while($row = mysql_fetch_row($res)){
 	#echo 'row[7]	',$row[7];
 	#echo 'row[6]	',$row[6];
 	#echo '----------------------';
-	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
+	if ($price[$name]/$period < $row[7] && $price[$name]/$period > $row[6]){
 		$total++;
 		#echo $total;
 	}
@@ -118,7 +118,7 @@ $sql = "select * from `stock_data` where date = '$date_array[0]' and source = 'x
 $res = mysql_query($sql,$conn);
 while($row=mysql_fetch_row($res)){
 	$name = $row[1];
-	if ($price[$name]/5 < $row[7] && $price[$name]/5 > $row[6]){
+	if ($price[$name]/$period < $row[7] && $price[$name]/$period > $row[6]){
 		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$name</a></li>";
 	}
 }
