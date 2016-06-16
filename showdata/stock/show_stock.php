@@ -47,7 +47,7 @@
 		<a href="goldenx.php" style="text-align:center;color:#ddd">上穿五日均线</a>
 	</div>
 	<div class="wrap1">
-		<a href="lowquantity.php" style="text-align:center;color:#ddd">缩量下跌</a>
+		<a href="lowquantity.php" style="text-align:center;color:#ddd">缩量下跌(待买)</a>
 	</div>
 	
 	
