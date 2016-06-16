@@ -38,7 +38,9 @@
 
 <?php
 
-$day = 10;
+#echo date("l");
+
+$day = 10;     #今天的振幅，是$day天内振幅最大的
 $begin = 0;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
@@ -111,7 +113,7 @@ mysql_query($sql,$conn);
 
 foreach ($max_amplitude_date as $key=>$value){
 	if ($max_amplitude_date[$key] == $amplitude_date[$key]){
-		$sql = "insert into analysis (name, date) values ('$stock_name[$key]', '$today')";
+		$sql = "insert into analysis (name, date, reason) values ('$stock_name[$key]', '$today', 'amplitude')";
 		#echo $sql;
 		mysql_query($sql,$conn);
 		$total++;

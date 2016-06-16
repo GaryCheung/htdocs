@@ -9,8 +9,13 @@
 
 
 	.wrap{
-		margin-left:49%;
+		margin-left:47%;
 		margin-top: 20px;
+	}
+
+	.wrap1{
+		margin-left:48%;
+		margin-top: 10px;
 	}
 	</style>
 </head>
@@ -36,9 +41,14 @@
 	</ul>
 
 	<div class="wrap">
-		<a href="tobuy.php" style="text-align:center;color:#ddd">备选股票</a>
+		<a href="tobuy.php" style="text-align:center;color:#ddd">今日振幅10日之最</a>
 	</div>
-
+	<div class="wrap1">
+		<a href="goldenx.php" style="text-align:center;color:#ddd">上穿五日均线</a>
+	</div>
+	<div class="wrap1">
+		<a href="lowquantity.php" style="text-align:center;color:#ddd">缩量下跌(待买)</a>
+	</div>
 	
 	
 
