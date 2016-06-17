@@ -42,6 +42,8 @@
 
 $day = 10;     #今天的振幅，是$day天内振幅最大的
 $begin = 0;
+echo '-----------------';
+echo $begin;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }

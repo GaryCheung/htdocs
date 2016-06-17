@@ -42,6 +42,7 @@
 
 $day = 12;
 $begin = 0;
+echo $begin;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }

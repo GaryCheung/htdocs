@@ -43,6 +43,8 @@
 $day = 10;
 $begin = 0;
 $start = 0;    #起始天，当天为0，前一天为1，以此类推
+echo '################';
+echo $begin;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
