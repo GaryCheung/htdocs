@@ -49,7 +49,7 @@ for ($i=$begin;$i<$day;$i++){
 #print_r($date_array);
 
 
-$conn=mysql_connect("localhost","root","root");
+$conn=mysql_connect("localhost","root","19860112");
 if(!$conn){
 	echo "连接失败";
 }
