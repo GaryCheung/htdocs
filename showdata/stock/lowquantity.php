@@ -42,7 +42,7 @@
 
 $day = 10;
 $begin = 0;
-$start = 1;    #起始天，当天为0，前一天为1，以此类推
+$start = 0;    #起始天，当天为0，前一天为1，以此类推
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
@@ -55,6 +55,10 @@ if(!$conn){
 
 mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
+
+$today = date("Y-m-d");
+$sql = "delete from analysis where date = '$today' and reason = 'low_quantity_drop'";
+mysql_query($sql,$conn);
 
 $sql = "select * from `stock_data` where date = '$date_array[$start]' and source = 'stockstar' ";
 #print($sql);

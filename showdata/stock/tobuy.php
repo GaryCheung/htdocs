@@ -108,7 +108,7 @@ $total = 0;
 
 
 $today = date("Y-m-d");
-$sql = "delete from analysis where date = '$today'";
+$sql = "delete from analysis where date = '$today' and reason = 'amplitude'";
 mysql_query($sql,$conn);
 
 foreach ($max_amplitude_date as $key=>$value){
