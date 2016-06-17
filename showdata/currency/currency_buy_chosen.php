@@ -27,7 +27,7 @@ SetCookie("currency",$currency);
 	<div class="wrapper">
 		<ul class="list">
 			<li>
-				<a href="showall.php" style="text-align:center;color:#ddd">首页</a>
+				<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 			</li>
 			<li>
 				<a href="show_currency.php" style="text-align:center;color:#ddd">汇率列表页</a>
