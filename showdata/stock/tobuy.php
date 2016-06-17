@@ -42,6 +42,8 @@
 
 $day = 10;     #今天的振幅，是$day天内振幅最大的
 $begin = 0;
+echo '-----------------';
+echo $begin;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
@@ -108,7 +110,7 @@ $total = 0;
 
 
 $today = date("Y-m-d");
-$sql = "delete from analysis where date = '$today'";
+$sql = "delete from analysis where date = '$today' and reason = 'amplitude'";
 mysql_query($sql,$conn);
 
 foreach ($max_amplitude_date as $key=>$value){

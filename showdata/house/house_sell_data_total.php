@@ -8,7 +8,7 @@ $top = $_COOKIE[sell][areatop];
 
 #echo $house,$bottom,$top;
 
-$conn=mysql_connect("localhost","root","19860112");
+$conn=mysql_connect("localhost","root","root");
 if(!$conn){
 	echo "连接失败";
 }

@@ -7,7 +7,7 @@ $layout = $_COOKIE[cookie][layout];
 
 #echo $house,$layout;
 
-$conn=mysql_connect("localhost","root","19860112");
+$conn=mysql_connect("localhost","root","root");
 if(!$conn){
 	echo "连接失败";
 }

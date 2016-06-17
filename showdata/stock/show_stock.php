@@ -49,7 +49,9 @@
 	<div class="wrap1">
 		<a href="lowquantity.php" style="text-align:center;color:#ddd">缩量下跌(待买)</a>
 	</div>
-	
+	<div class="wrap1">
+		<a href="max_quantity.php" style="text-align:center;color:#ddd">放量，10日最大量能</a>
+	</div>
 	
 
 

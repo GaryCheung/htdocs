@@ -42,6 +42,7 @@
 
 $day = 12;
 $begin = 0;
+echo $begin;
 for ($i=$begin;$i<$day;$i++){
 	$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
 }
@@ -97,6 +98,8 @@ while ($ma5 < $period){
 #echo $date_array[0];
 $total = 0;
 $today = date("Y-m-d");
+$sql = "delete from analysis where date = '$today' and reason = 'goldx'";
+mysql_query($sql,$conn);
 $sql="select * from `stock_data` where date = '$date_array[0]' and source = 'xueqiu' ";
 #echo $sql;
 
