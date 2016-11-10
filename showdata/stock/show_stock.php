@@ -52,7 +52,9 @@
 	<div class="wrap1">
 		<a href="max_quantity.php" style="text-align:center;color:#ddd">放量，10日最大量能</a>
 	</div>
-	
+	<div class="wrap1">
+		<a href="today_chosen_stock.php" style="text-align:center;color:#ddd">今日股票</a>
+	</div>	
 
 
 

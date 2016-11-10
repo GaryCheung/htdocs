@@ -59,7 +59,7 @@ mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
 
 $start = 0;
-$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'stockstar' ";
+$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
 #echo $sql;
 $res=mysql_query($sql,$conn);
 while ($row=mysql_fetch_row($res)){
@@ -77,7 +77,7 @@ while ($row=mysql_fetch_row($res)){
 #print_r($quantity_date);
 
 for ($i=1;$i<$day;$i++){
-	$sql="select * from `stock_data` where date = '$date_array[$i]' and source = 'stockstar'";
+	$sql="select * from `stock_data` where date = '$date_array[$i]' and source = 'xueqiu'";
 	#echo $sql;
 	#echo "###################################";
 	$res=mysql_query($sql,$conn);

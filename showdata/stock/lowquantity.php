@@ -40,7 +40,7 @@
 
 #echo date("l");
 
-$day = 10;
+$day = 20;
 $begin = 0;
 $start = 0;    #起始天，当天为0，前一天为1，以此类推
 echo '################';
@@ -62,7 +62,7 @@ $today = date("Y-m-d");
 $sql = "delete from analysis where date = '$today' and reason = 'low_quantity_drop'";
 mysql_query($sql,$conn);
 
-$sql = "select * from `stock_data` where date = '$date_array[$start]' and source = 'stockstar' ";
+$sql = "select * from `stock_data` where date = '$date_array[$start]' and source = 'xueqiu' ";
 #print($sql);
 
 $res = mysql_query($sql,$conn);
@@ -82,7 +82,7 @@ $flag = 0;
 $period = 5;      #成交量在$period日内最低
 $begin = 0;
 while ($ma5 < $period){
-	$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'stockstar' ";
+	$sql="select * from `stock_data` where date = '$date_array[$begin]' and source = 'xueqiu' ";
 	$flag = 0;
 	#echo $sql;
 	$res = mysql_query($sql,$conn);
@@ -123,7 +123,7 @@ print_r($quantity);
 #echo $date_array[0];
 $total = 0;
 $today = date("Y-m-d");
-$sql="select * from `stock_data` where date = '$date_array[$start]' and source = 'stockstar' ";
+$sql="select * from `stock_data` where date = '$date_array[$start]' and source = 'xueqiu' ";
 #echo $sql;
 
 $res = mysql_query($sql,$conn);
@@ -143,7 +143,7 @@ while($row = mysql_fetch_row($res)){
 
 echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $total 支股票</p>";
 
-$sql = "select * from `stock_data` where date = '$date_array[$start]' and source = 'stockstar' ";
+$sql = "select * from `stock_data` where date = '$date_array[$start]' and source = 'xueqiu' ";
 $res = mysql_query($sql,$conn);
 while($row=mysql_fetch_row($res)){
 	$name = $row[1];

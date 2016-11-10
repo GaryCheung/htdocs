@@ -40,7 +40,8 @@
 
 #echo date("l");
 
-$day = 12;
+
+$day = 20;
 $begin = 0;
 echo $begin;
 for ($i=$begin;$i<$day;$i++){
@@ -48,7 +49,7 @@ for ($i=$begin;$i<$day;$i++){
 }
 #print_r($date_array);
 
-
+###
 $conn=mysql_connect("localhost","root","root");
 if(!$conn){
 	echo "连接失败";
@@ -66,7 +67,7 @@ while($row = mysql_fetch_row($res)){
 	#print($row);
 	$name = $row[1];
 	$price[$name] = 0;
-	# echo $price[$name];
+	echo $price[$name];
 }
 
 $ma5 = 0;
@@ -82,7 +83,8 @@ while ($ma5 < $period){
 		$name = $row[1];
 		$temp = (float)$row[7]; 
 		$price[$name] += $temp;
-		#echo $price[$name];
+		echo $price[$name];
+		echo "##########";
 		$flag = 1;
 		}
 	}
@@ -91,8 +93,13 @@ while ($ma5 < $period){
 		#echo $ma5;
 	}
 	$begin++;
-	#echo 'begin--------------------------------';
-	#echo $begin;
+	echo 'begin--------------------------------';
+	echo "begin=";
+	echo $begin;
+	echo "#######################   END BEGIN";
+	echo "ma5=================";
+	echo $ma5;
+	echo "#######################    END MA5";
 }
 
 #echo $date_array[0];
@@ -111,6 +118,7 @@ while($row = mysql_fetch_row($res)){
 	#echo 'row[6]	',$row[6];
 	#echo '----------------------';
 	if ($price[$name]/$period < $row[7] && $price[$name]/$period > $row[6]){
+		$five_ave = $price[$name]/$period;
 		$total++;
 		$sql = "insert into analysis (name, date, reason) values ('$name', '$today', 'goldx')";
 		#echo $sql;
@@ -129,6 +137,7 @@ while($row=mysql_fetch_row($res)){
 		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$name</a></li>";
 	}
 }
+
 
 ?>
 </body>
