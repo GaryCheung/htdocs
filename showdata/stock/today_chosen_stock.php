@@ -49,7 +49,7 @@ if(!$conn){
 mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
 
-$sql = "select * from `analysis` where date = '2016-11-09' ";
+$sql = "select * from `analysis` where date = '$today' ";
 $res = mysql_query($sql,$conn);
 #print($res);
 $flag = [];
