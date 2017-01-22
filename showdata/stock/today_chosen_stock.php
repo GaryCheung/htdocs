@@ -98,6 +98,14 @@ echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $total 支股�
 
 foreach ($flag as $key => $value) {
 	if ($flag[$key] == 3){
+		$sql = "insert into analysis (name, date, reason) values ('$key', '$today', 'chosen')";
+		$conn=mysql_connect("localhost","root","root");
+		if(!$conn){
+		echo "连接失败";
+		}
+		mysql_select_db("stock",$conn);
+		mysql_query("set names utf8");
+		mysql_query($sql,$conn);
 		#echo $key;
 		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$key</a></li>";	
 	}

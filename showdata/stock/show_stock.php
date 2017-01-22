@@ -33,10 +33,13 @@
 			<a href="stock_amplitude_list.php" style="text-align:center;color:#ddd">雪球股票振幅</a>
 		</li>
 		<li class="list">
-			<a href="stock_quantity_list_stockstar.php" style="text-align:center;color:#ddd">股票之星股票成交量</a>
+			<a href="stock_holder.php" style="text-align:center;color:#ddd">我的持仓</a>
 		</li>
 		<li class="list">
-			<a href="stock_amplitude_list_stockstar.php" style="text-align:center;color:#ddd">股票之星股票振幅</a>
+			<a href="stock_holder_analysis.php" style="text-align:center;color:#ddd">我的持仓分析</a>
+		</li>
+		<li class="list">
+			<a href="vertual_holder_analysis.php" style="text-align:center;color:#ddd">模拟持仓分析</a>
 		</li>
 	</ul>
 
@@ -53,7 +56,16 @@
 		<a href="max_quantity.php" style="text-align:center;color:#ddd">放量，10日最大量能</a>
 	</div>
 	<div class="wrap1">
+		<a href="gold5x.php" style="text-align:center;color:#ddd">5日10日均线金叉</a>
+	</div>
+	<div class="wrap1">
 		<a href="today_chosen_stock.php" style="text-align:center;color:#ddd">今日股票</a>
+	</div>	
+	<div class="wrap1">
+		<a href="strategy_succes_rate.php" style="text-align:center;color:#ddd">10%卖出策略成功率</a>
+	</div>	
+	<div class="wrap1">
+		<a href="five_persent_to_sell_strategy.php" style="text-align:center;color:#ddd">5%卖出策略成功率</a>
 	</div>	
 
 
