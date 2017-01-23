@@ -17,6 +17,12 @@
 		margin-left:48%;
 		margin-top: 10px;
 	}
+
+	.wrap2{
+		margin-left:48%;
+		margin-top: 20px;
+		color: #ddd;
+	}
 	</style>
 </head>
 
@@ -40,6 +46,9 @@
 		</li>
 		<li class="list">
 			<a href="vertual_holder_analysis.php" style="text-align:center;color:#ddd">模拟持仓分析</a>
+		</li>
+		<li class="list">
+			<a href="score.php" style="text-align:center;color:#ddd">得分最高100股</a>
 		</li>
 	</ul>
 
@@ -67,6 +76,10 @@
 	<div class="wrap1">
 		<a href="five_persent_to_sell_strategy.php" style="text-align:center;color:#ddd">5%卖出策略成功率</a>
 	</div>	
+
+	<div class="wrap2">
+		<a href="citou.php" style="text-align:center;color:#ddd">刺透形态</a>
+	</div>
 
 
 
