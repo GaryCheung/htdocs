@@ -43,8 +43,6 @@
 $day = 30;
 $begin = 0;
 echo $begin;
-
-while($begin++ < 20){
 ########### 取最近30天的雪球数据  ###########
 
 for ($i=$begin;$i<$day;$i++){
@@ -270,7 +268,6 @@ while($row=mysql_fetch_row($res)){
 	if ($price_10day[$name]/$period_10 < $price_5day[$name]/$period_5 && $price_10day_yesterday[$name]/$period_10 > $price_5day_yesterday[$name]/$period_5){
 		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$name</a></li>";
 	}
-}
 }
 
 ?>

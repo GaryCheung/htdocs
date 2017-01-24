@@ -78,7 +78,10 @@
 	</div>	
 
 	<div class="wrap2">
-		<a href="citou.php" style="text-align:center;color:#ddd">刺透形态</a>
+		<a href="citou.php" style="text-align:center;color:#ddd">底部刺透形态</a>
+	</div>
+	<div class="wrap1">
+		<a href="tunmo.php" style="text-align:center;color:#ddd">底部吞没形态</a>
 	</div>
 
 

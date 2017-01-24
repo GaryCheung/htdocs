@@ -21,16 +21,17 @@
 
 	.show{
 		list-style: none;
-		text-align: center;
+		text-align: left;
 		margin-left: 40%;
 		margin-top: 10px;
+		width: 100%;
 		color:#ddd;
 	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">刺透形态股票</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">今日股票得分榜</h1>
 
 	<div class="wrapper">
 		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
@@ -94,9 +95,9 @@ function Get_safe_weight($factor_reason,$period){
 function Get_weight($profit_weight,$safe_weight,$factor_reason){
 	$len_profit = sizeof($profit_weight);
 	$len_safe = sizeof($safe_weight);
-	echo $len_profit;
-	print_seperation();
-	echo $len_safe;
+	#echo $len_profit;
+	#print_seperation();
+	#echo $len_safe;
 	if ($len_profit <= $len_safe){
 		while ($len_profit-- > 0){
 			$reason = $factor_reason[$len_profit];
@@ -113,9 +114,11 @@ function Get_weight($profit_weight,$safe_weight,$factor_reason){
 
 function Diff_stock($today){
 	$sql = "select distinct(name) from analysis where date >= '$today'";
+	#echo $sql;
 	$res = Run_sql($sql);
 	$i = 0;
 	while ($row = mysql_fetch_row($res)){
+		#print_r($row);
 		$stock[$i++] = $row[0];
 	}
 	return $stock;
@@ -126,21 +129,45 @@ function Score($weight,$today,$stock){
 	echo $len;
 	while ($len-- > 0){
 		$name = $stock[$len];
-		echo $name;
+		#echo $name;
 		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code)){
 			#echo "yes";
 			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
 		};
 		$code = $stock_code[0];
-		$sql = "select * from analysis where date >= '$today' and name like '$code'";
+		$sql = "select * from analysis where date >= '$today' and name like '%$code%'";
+		#echo $sql;
+		#print_seperation();
 		$res = Run_sql($sql);
 		$score[$name] = 1;
 		while ($row = mysql_fetch_row($res)){
+			#print_r($row);
+			#print_seperation();
 			$reason = $row[3];
 			$score[$name] = $score[$name] * $weight[$reason];
 		}
 	}
 	return $score;
+}
+
+function Insert_data($score,$today){
+	#$sql = "delete from analysis where date >= '$today'";
+	#echo $sql;
+	#Run_sql($sql);
+	$score_out = array_slice($score, 0, 100);
+	$len = sizeof($score_out);
+	echo "<p style='text-align:center;color:#ddd;font-size:20px'>共 $len 支股票</p>";
+	#echo $len;
+	#echo "<br>";
+	foreach ($score_out as $key => $value) {
+		#$sql = "insert into score (name, date, score) values ('$key', '$today', $value)";
+		#$res = Run_sql($sql);
+		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$key 得分 $value</a></li>";	
+	}
+	foreach ($score as $key => $value) {
+		$sql = "insert into score (name, date, score) values ('$key', '$today', $value)";
+		$res = Run_sql($sql);
+	}
 }
 
 $profit_weight = Get_proft_weight($factor_reason,$increase,$period);
@@ -157,14 +184,17 @@ $weight = Get_weight($profit_weight,$safe_weight,$factor_reason);
 #print_r($weight);
 
 #print_seperation();
-
+#echo "$today";
 $stock = Diff_stock($today);
-print_r($stock);
+#print_r($stock);
 
-print_seperation();
+#print_seperation();
 
 $score = Score($weight,$today,$stock);
-print_r($score);
+#print_r($score);
+arsort($score);
+
+Insert_data($score,$today);
 
 
 ?>

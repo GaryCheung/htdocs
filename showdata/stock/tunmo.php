@@ -26,26 +26,32 @@
 		margin-top: 10px;
 		color:#ddd;
 	}
+
+	.result{
+		float: left;
+		color: #ddd;
+	}
 	</style>
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">刺透形态股票</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">吞没形态股票</h1>
 
 	<div class="wrapper">
-		<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
+		<a href="/showdata/showall.php" style="text-align:left;color:#ddd">首页</a>
 	</div>
 
 <?php
-#echo date("l");
 
 ############ 参数区  ###############
 $day = 20;
 $begin = 0;
 echo $begin;
 $today = date("Y-m-d");
-#$today = '2017-01-20';
+#$today = '2017-01-23';
 $days = 2;      ####### 最近days天 ########
+
+echo "<p style='text-align:center;color:#ddd;font-size:20px'>昨日出现近 $day 天底部，并发生吞没形态</p>";
 
 
 function Run_sql($sql){
@@ -70,15 +76,6 @@ function Last_deal_date($today,$days){
 }
 
 function Get_date($day, $today){
-/*
-#############  取最近day天的日期  #################
-	while($begin < $day){
-########### 取最近day天的雪球数据  ###########
-		for ($i=$begin++;$i<$day;$i++){
-			$date_array[$i] = date("Y-m-d",strtotime("-$i day"));
-		}
-		print_r($date_array);
-*/
 	$date_array = Last_deal_date($today, $day);
 		return $date_array;
 }
@@ -185,7 +182,7 @@ function At_bottom($date_array,$min_price){
 	return $min_price;
 }
 
-function Is_citou($min_price, $cmp_date){
+function Is_tunmo($min_price, $cmp_date){
 	$i=0;
 	$sql="select * from `stock_data` where date = '$cmp_date[0]' and source = 'xueqiu' ";
 	$res = Run_sql($sql);
@@ -205,7 +202,7 @@ function Is_citou($min_price, $cmp_date){
 		$price_close = $row[7];
 		if ($min_price[$name_date] == $cmp_date[1]){
 			#echo "!!!!!!!!  SUCESS  GET  ONE   !!!!!!!!!!!";
-			if ($price_open < $price_close && $min_price[$name_open] > $min_price[$name_close] && $price_open < $min_price[$name_close] && $price_close >= $min_price[$name_open]+0.5*($min_price[$name_close]-$min_price[$name_open]) && $price_close < $min_price[$name_open]){
+			if ($price_open < $min_price[$name_close] && $price_close > $min_price[$name_open] && $price_close > $price_open && $min_price[$name_close] < $min_price[$name_open]){
 				$stock_selected[$i++] = $name;
 			}
 		}
@@ -217,7 +214,7 @@ function Is_citou($min_price, $cmp_date){
 function Insert_data($stock_selected,$date_array,$begin){
 	#echo "BEGIN";
 	#echo $date_array[$begin];
-	$sql = "delete from analysis where date >= '$date_array[$begin]' and reason = 'citou'";
+	$sql = "delete from analysis where date >= '$date_array[$begin]' and reason = 'tunmo'";
 	echo $sql;
 	Run_sql($sql);
 	$len = sizeof($stock_selected);
@@ -226,13 +223,18 @@ function Insert_data($stock_selected,$date_array,$begin){
 	#echo "<br>";
 	while ($len-- > 0){
 		#echo $date_array[$begin];
-		$sql = "insert into analysis (name, date, reason) values ('$stock_selected[$len]', '$date_array[$begin]', 'citou')";
+		$sql = "insert into analysis (name, date, reason) values ('$stock_selected[$len]', '$date_array[$begin]', 'tunmo')";
 		$res = Run_sql($sql);
-		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$stock_selected[$len]</a></li>";	
+		if (preg_match("/\(+\w*\W+\w*\)+/", $stock_selected[$len], $stock_code))
+			{
+			#echo "yes";
+			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$string = substr($stock_code[0], 1, 2).substr($stock_code[0], 4, -1);
+		$url = 'xueqiu.com/S/'.$string;
+		echo "<li class='show'><a href='http://$url' style='color:#ddd'>$stock_selected[$len]</a></li>";	
 	}
 }
-
-
 
 $date_array = Get_date($day,$today);
 #print_r($date_array);
@@ -270,7 +272,7 @@ for ($i=0; $i<$len; $i++){
 echo $flag;
 */
 
-$stock_selected = Is_citou($bottom_price, $cmp_date);
+$stock_selected = Is_tunmo($bottom_price, $cmp_date);
 #print_r($stock_selected);
 
 Insert_data($stock_selected,$date_array,$begin);
