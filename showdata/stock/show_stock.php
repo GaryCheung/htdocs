@@ -83,6 +83,12 @@
 	<div class="wrap1">
 		<a href="tunmo.php" style="text-align:center;color:#ddd">底部吞没形态</a>
 	</div>
+	<div class="wrap1">
+		<a href="hongsanbing.php" style="text-align:center;color:#ddd">红三兵形态</a>
+	</div>
+	<div class="wrap1">
+		<a href="blank.php" style="text-align:center;color:#ddd">跳空缺口</a>
+	</div>
 
 
 

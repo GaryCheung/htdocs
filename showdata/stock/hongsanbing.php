@@ -48,10 +48,8 @@ $day = 20;
 $begin = 0;
 echo $begin;
 $today = date("Y-m-d");
-#$today = '2017-01-23';
-$days = 2;      ####### 最近days天 ########
-
-echo "<p style='text-align:center;color:#ddd;font-size:20px'>昨日出现近 $day 天底部，并发生吞没形态</p>";
+#$today = '2017-01-24';
+$days = 3;      ####### 最近days天 ########
 
 
 function Run_sql($sql){
@@ -126,65 +124,8 @@ function All_stock($date_array){
 	return $min_price;
 }
 
-function At_bottom($date_array,$min_price){
-	#print_r($min_price);
-	$length = sizeof($date_array);
-	#echo $length;
-	$i = 1;
-	$flag = 0;
-	while ($i < $length){
-		$sql="select * from `stock_data` where date = '$date_array[$i]' and source = 'xueqiu' ";
-		$i++;
-		#echo $sql;
-		$res = Run_sql($sql);
-		while($row = mysql_fetch_row($res)){
-			#print_r($row);
-			$name = $row[1];
-			if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
-				{
-				#echo "yes";
-				#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
-				};
-			$name = $stock_code[0];
-			$name_open = (string)$stock_code[0].'name_open';
-			$name_close = (string)$stock_code[0].'name_close';
-			$name_date = (string)$stock_code[0].'name_date';
-			$price_low = $row[9];
-			$name_low = (string)$stock_code[0].'name_low';
-			#echo $name_date;
-			#echo "<br>";
-			/*
-			echo "<br>";
-			echo "@@@@@@@@@   price_low";
-			echo $price_low;
-			echo "@@@@@@@@@";
-			echo "<br>";
-			echo "#############  min_price";
-			echo $min_price[$name];
-			echo "############";
-			
-			echo $name;
-			echo "#####  min_price  ####";
-			echo $min_price[$name];
-			echo "<br>";
-			*/
-
-			if ($price_low <= $min_price[$name_low]  && $price_low > 0){
-				$min_price[$name_low]=$price_low;
-				$min_price[$name_date]=$row[4];
-				$min_price[$name_open]=$row[6];
-				$min_price[$name_close] = $row[7];
-				#echo "GET ONE";
-			}
-
-		}
-	}
-	return $min_price;
-}
-
-function Is_tunmo($min_price, $cmp_date){
-	$i=0;
-	$sql="select * from `stock_data` where date = '$cmp_date[0]' and source = 'xueqiu' ";
+function Get_price($date){
+	$sql="select * from `stock_data` where date = '$date' and source = 'xueqiu' ";
 	$res = Run_sql($sql);
 	while($row = mysql_fetch_row($res)){
 		#print_r($row);
@@ -198,15 +139,36 @@ function Is_tunmo($min_price, $cmp_date){
 		$name_open = (string)$stock_code[0].'name_open';
 		$name_close = (string)$stock_code[0].'name_close';
 		$name_date = (string)$stock_code[0].'name_date';
-		$price_open = $row[6];
-		$price_close = $row[7];
-		if ($min_price[$name_date] == $cmp_date[1]){
-			#echo "!!!!!!!!  SUCESS  GET  ONE   !!!!!!!!!!!";
-			if ($price_open < $min_price[$name_close] && $price_close > $min_price[$name_open] && $price_close > $price_open && $min_price[$name_close] < $min_price[$name_open]){
+		$price[$name_open] = $row[6];
+		$price[$name_close] = $row[7];
+		$price[$name_date] = $row[4];
+	}
+	return $price;		
+}
+
+function Is_hongsanbing($price_1, $price_2, $price_3, $date){
+	$i = 0;
+	$sql="select * from `stock_data` where date = '$date' and source = 'xueqiu' ";
+	#echo $sql;
+	#echo "<br>";
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+				#echo "yes";
+				#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name_date = (string)$stock_code[0].'name_date';
+		$name_open = (string)$stock_code[0].'name_open';
+		$name_close = (string)$stock_code[0].'name_close';	
+		$name_low =	(string)$stock_code[0].'name_low';
+		if ($price_1[$name_open] < $price_1[$name_close] && $price_2[$name_open] < $price_2[$name_close] && $price_3[$name_open] < $price_3[$name_close]){
+			#echo "!!!!!!   POSSIBLITY    !!!!!!!!";
+			if ($price_2[$name_open] > $price_1[$name_open]+0.5*($price_1[$name_close]-$price_1[$name_open]) && $price_2[$name_close] > $price_1[$name_close] && $price_3[$name_open] > $price_2[$name_open]+0.5*($price_2[$name_close]-$price_2[$name_open]) && $price_3[$name_close] > $price_2[$name_close]){
 				$stock_selected[$i++] = $name;
 			}
 		}
-		
 	}
 	return $stock_selected;
 }
@@ -214,7 +176,7 @@ function Is_tunmo($min_price, $cmp_date){
 function Insert_data($stock_selected,$date_array,$begin){
 	#echo "BEGIN";
 	#echo $date_array[$begin];
-	$sql = "delete from analysis where date = '$date_array[$begin]' and reason = 'tunmo'";
+	$sql = "delete from analysis where date = '$date_array[$begin]' and reason = 'hongsanbing'";
 	echo $sql;
 	Run_sql($sql);
 	$len = sizeof($stock_selected);
@@ -223,7 +185,7 @@ function Insert_data($stock_selected,$date_array,$begin){
 	#echo "<br>";
 	while ($len-- > 0){
 		#echo $date_array[$begin];
-		$sql = "insert into analysis (name, date, reason) values ('$stock_selected[$len]', '$date_array[$begin]', 'tunmo')";
+		$sql = "insert into analysis (name, date, reason) values ('$stock_selected[$len]', '$date_array[$begin]', 'hongsanbing')";
 		$res = Run_sql($sql);
 		if (preg_match("/\(+\w*\W+\w*\)+/", $stock_selected[$len], $stock_code))
 			{
@@ -236,48 +198,20 @@ function Insert_data($stock_selected,$date_array,$begin){
 	}
 }
 
-$date_array = Get_date($day,$today);
+$date_array = Get_date($day, $today);
 #print_r($date_array);
-#echo "<br>";
 
-
-
-$min_price = All_stock($date_array);
-#print_r($min_price);
-#echo "<br>";
-
-$bottom_price = At_bottom($date_array,$min_price);
-#echo "############  min_price #############";
-#echo "<br>";
-#print_r($bottom_price);
-
-$list = Stock_list($date_array);
-#print_r($list);
-
-$cmp_date = Last_deal_date($today,$days);
-#print_r($cmp_date);
-
-/*
-$len = sizeof($list);
-$flag = 0;
-for ($i=0; $i<$len; $i++){
-	$name_date = (string)$list[$i].'name_date';
-	echo $name_date;
-	echo $bottom_price[$name_date];
-	echo "<br>";
-	if ($bottom_price[$name_date] == $cmp_date[1]){
-		$flag++;
-	}
+$len = sizeof($date_array);
+while ($len-- > 0){
+	$price[$len] = Get_price($date_array[$len]);
 }
-echo $flag;
-*/
+#print_r($price[0]);
 
-$stock_selected = Is_tunmo($bottom_price, $cmp_date);
-#print_r($stock_selected);
+$stock_selected = Is_hongsanbing($price[2],$price[1],$price[0],$date_array[0]);
 
 Insert_data($stock_selected,$date_array,$begin);
-
 
 ?>
 </body>
 </html>
+

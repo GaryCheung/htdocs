@@ -57,7 +57,7 @@
 $ratio = 0.02; 
 $out_ratio=$ratio*100;  
 
-$factor_reason = ['chosen','amplitude','goldx','low_quantity_drop','max_quantity','gold5_10x','citou'];
+$factor_reason = ['chosen','amplitude','goldx','low_quantity_drop','max_quantity','gold5_10x','citou','tunmo'];
 $factor_test = $factor_reason[3];
 
 $today = date("Y-m-d");

@@ -41,7 +41,7 @@
 
 ########### 参数区  ###############
 
-$factor_reason = ['chosen','amplitude','goldx','low_quantity_drop','max_quantity','gold5_10x','citou'];
+$factor_reason = ['chosen','amplitude','goldx','low_quantity_drop','max_quantity','gold5_10x','citou','tunmo','hongsanbing','blank'];
 $period = 15;
 $increase = 2.00;
 $today = date("Y-m-d");
@@ -162,7 +162,14 @@ function Insert_data($score,$today){
 	foreach ($score_out as $key => $value) {
 		#$sql = "insert into score (name, date, score) values ('$key', '$today', $value)";
 		#$res = Run_sql($sql);
-		echo "<li class='show'><a href='/showdata/showall.php' style='color:#ddd'>$key 得分 $value</a></li>";	
+		if (preg_match("/\(+\w*\W+\w*\)+/", $key, $stock_code))
+			{
+			#echo "yes";
+			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$string = substr($stock_code[0], 1, 2).substr($stock_code[0], 4, -1);
+		$url = 'xueqiu.com/S/'.$string;
+		echo "<li class='show'><a href='http://$url' style='color:#ddd'>$key 得分 $value</a></li>";	
 	}
 	foreach ($score as $key => $value) {
 		$sql = "insert into score (name, date, score) values ('$key', '$today', $value)";
