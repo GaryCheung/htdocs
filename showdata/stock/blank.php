@@ -48,7 +48,7 @@ $day = 20;
 $begin = 0;
 echo $begin;
 $today = date("Y-m-d");
-$today = '2017-01-24';
+#$today = '2017-01-09';
 $days = 2;      ####### 最近days天 ########
 
 

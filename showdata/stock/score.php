@@ -177,6 +177,14 @@ function Insert_data($score,$today){
 	}
 }
 
+function Analysis($score){
+	$score_out = array_slice($score, 0, 100);
+	foreach ($score_out as $key => $value) {
+		$sql = "insert into analysis (name, date, reason) values ('$key', '$today', 'score100')";
+		$res = Run_sql($sql);
+	}
+}
+
 $profit_weight = Get_proft_weight($factor_reason,$increase,$period);
 #print_r($profit_weight);
 
@@ -202,6 +210,8 @@ $score = Score($weight,$today,$stock);
 arsort($score);
 
 Insert_data($score,$today);
+
+Analysis($score);
 
 
 ?>
