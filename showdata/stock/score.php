@@ -172,12 +172,12 @@ function Insert_data($score,$today){
 		echo "<li class='show'><a href='http://$url' style='color:#ddd'>$key 得分 $value</a></li>";	
 	}
 	foreach ($score as $key => $value) {
-		$sql = "insert into score (name, date, score) values ('$key', '$today', $value)";
+		$sql = "insert into score (name, date, score) values ('$key', '$today', ‘$value’)";
 		$res = Run_sql($sql);
 	}
 }
 
-function Analysis($score){
+function Analysis($score,$today){
 	$score_out = array_slice($score, 0, 100);
 	foreach ($score_out as $key => $value) {
 		$sql = "insert into analysis (name, date, reason) values ('$key', '$today', 'score100')";
@@ -211,7 +211,7 @@ arsort($score);
 
 Insert_data($score,$today);
 
-Analysis($score);
+Analysis($score,$today);
 
 
 ?>

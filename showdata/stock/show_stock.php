@@ -50,6 +50,9 @@
 		<li class="list">
 			<a href="score.php" style="text-align:center;color:#ddd">得分最高100股</a>
 		</li>
+		<li class="list">
+			<a href="total_performance.php" style="text-align:center;color:#ddd">今日股票表现</a>
+		</li>
 	</ul>
 
 	<div class="wrap">

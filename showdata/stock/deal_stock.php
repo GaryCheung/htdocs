@@ -19,7 +19,7 @@ if(!$conn){
 mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
 
-$sql = "insert into stock_holder (stock_name, buy_date, total_cost, price_per_share, stockid, state) values ('$stock', '$today', '$price', '$cost', '$stockid', 'sell')";
+$sql = "update stock_holder set state = 'finished' where stockid = '$stockid' order by buy_date DESC limit 1";
 $res = mysql_query($sql,$conn);
 
 ?>

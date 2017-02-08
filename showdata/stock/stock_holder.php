@@ -75,7 +75,7 @@ if(!$conn){
 mysql_select_db("stock",$conn);
 mysql_query("set names utf8");
 
-$sql = "select * from `stock_holder` ";
+$sql = "select * from `stock_holder` where state = 'buy'";
 $res = mysql_query($sql,$conn);
 #print($res);
 $flag = 0;
