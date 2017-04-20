@@ -92,6 +92,9 @@
 	<div class="wrap1">
 		<a href="blank.php" style="text-align:center;color:#ddd">跳空缺口</a>
 	</div>
+	<div class="wrap1">
+		<a href="position.php" style="text-align:center;color:#ddd">股票价格位置</a>
+	</div>
 
 
 
