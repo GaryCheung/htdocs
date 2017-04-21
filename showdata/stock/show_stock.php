@@ -95,6 +95,9 @@
 	<div class="wrap1">
 		<a href="position.php" style="text-align:center;color:#ddd">股票价格位置</a>
 	</div>
+	<div class="wrap1">
+		<a href="above_5average.php" style="text-align:center;color:#ddd">当前价格在5日均线上</a>
+	</div>
 
 
 

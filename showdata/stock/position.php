@@ -151,7 +151,7 @@ function update_lowest_price($list,$today){
 	foreach ($list as $key => $value) {
 		$name = $key;
 		$sql = "update stock_data set history_lowest_price = '$value' where stock_name like '%$name%' and date = '$today'";
-		echo $sql;
+		#echo $sql;
 		$res = Run_sql($sql);
 	}
 }
