@@ -83,154 +83,198 @@ function all_stock($date){
 	return $list;
 }
 
-function stock_price_min($stock_name){
+function stock_price_min($stock_name,$today){
 	$len = sizeof($stock_name);
-	echo $len;
-	while($len-- > 0){
+	while ($len-- > 0){
 		$name = $stock_name[$len];
-		$sql = "select * from `stock_data` where stock_name like '%$name%'";
+		$price_min[$name] = 1000000;
+	}
+	#print_r($price_min);
+	echo "INITIAL DONE!!!!";
+	echo "<br>";
+	$len = sizeof($stock_name);
+	while ($len-- > 0){
+		$name = $stock_name[$len];
+		$sql = "select * from `stock_data` where stock_name like '%$name%' and date <= '$today'";
 		#echo $sql;
 		$res = Run_sql($sql);
-		$price_min = 1000000;
+		$flag = 0;
 		while($row = mysql_fetch_row($res)){
+			#echo "#################";
+			#echo $flag++;
+			#echo "#################";
+			#echo "<br>";
 			$price = $row[7];
 			$date = $row[4];
 			#echo $price;
 			#echo "<br>";
-			if ($price <= $price_min && $price != 0){
-				$price_min = $price;
+			#echo $price_min[$stock_code[0]];
+			#echo "<br>";
+			if ($price <= $price_min[$name] && $price != 0){
+				$price_min[$name] = $price;
 				#echo $date;
 				#echo "<br>";
-			}
+				}
 		}
-		$list[$name] = $price_min;
-		#echo $list[$name];
-		#echo "<br>";
-		#echo $price_min;
-		#echo "<br>";
+		print_r($price_min);
+		echo "##################";
+		echo "<br>";
 	}
-	return $list;
+	echo "PRICE_MIN DONE!!!!";
+	echo "<br>";
+	#print_r($price_min);
+	return $price_min;
 }
 
-function stock_price_min_yesterday($stock_name,$yesterday,$today){
-	$len = sizeof($stock_name);
-	echo $len;
-	while($len-- > 0){
-		$name = $stock_name[$len];
-		$sql = "select * from `stock_data` where stock_name like '%$name%' and date = '$yesterday'";
-		#echo $sql;
-		$res = Run_sql($sql);
-		while($row = mysql_fetch_row($res)){
-			$price_min = $row[11];
-			#echo $price_min;
-		}
-		$list[$name] = $price_min;
-		#echo $list[$name];
-		#echo "<br>";
+function stock_price_min_yesterday($today){
+	$sql = "select * from `stock_extend` where date < '$today' order by date desc limit 1";
+	echo $sql;
+	echo "<br>";
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		$yesterday = $row[2];
+	}
+	$sql_stock_min = "select * from `stock_extend` where date = '$yesterday'";
+	#echo $sql;
+	$res = Run_sql($sql_stock_min);
+	while($row = mysql_fetch_row($res)){
+		$price_min = $row[11];
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+				#echo "yes";
+				#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
 		#echo $price_min;
+		$name = $stock_code[0];
+		$list[$name] = $price_min;	
+		#print_r($list);	
+		#echo "<br>";
+		#echo $name;
+		#echo "###############";
 		#echo "<br>";
 	}
-	$len = sizeof($stock_name);
-	echo $len;
-	while($len-- > 0){
-		$name = $stock_name[$len];
-		$sql = "select * from `stock_data` where stock_name like '%$name%' and date = '$today'";
-		#echo $sql;
-		$res = Run_sql($sql);
-		while($row = mysql_fetch_row($res)){
-			if ($list[$name] >= $row[7]){
+	$sql_stock_min = "select * from `stock_data` where date = '$today'";
+	#echo $sql;
+	$res = Run_sql($sql_stock_min);
+	while($row = mysql_fetch_row($res)){
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+			#echo "yes";
+			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name = $stock_code[0];
+		if ($list[$name] >= $row[7] && $row[7] != 0){
 				$list[$name] = $row[7];
 			}
-		}
+		#echo "<br>";
+		#echo $name;
+		#echo "###############";
+		#echo "<br>";		
 	}
+	#print_r($list);
+	#echo "<br>";
+	#echo "DONE!!!!!!!!!!!!!";
+	#echo "<br>";
 	return $list;	
 }
 
 function update_lowest_price($list,$today){
 	echo $today;
+	echo "<br>";
+	echo "###########";
+	echo "<br>";
+	#print_r($list);
+	echo "<br>";
+	$flag = 0;
+	$sql_del = "delete from stock_extend where date = '$today'";
+	echo $sql;
+	$res = Run_sql($sql_del);
 	foreach ($list as $key => $value) {
+		#echo "<br>";
+		#echo "@@@@@@@@@    FLAG     @@@@@@@@@@@@@@@";
+		#echo $flag++;
+		#echo "<br>";
 		$name = $key;
-		$sql = "update stock_data set history_lowest_price = '$value' where stock_name like '%$name%' and date = '$today'";
+		#echo "<br>";
+		#echo $name;
+		#echo "#############";
+		#echo "<br>";
+		$sql_update = "insert into stock_extend (stock_name, date, history_lowest_price) values ('$name', '$today', '$value')";
 		#echo $sql;
-		$res = Run_sql($sql);
+		$res = Run_sql($sql_update);
 	}
 }
 
-function position($list,$stock_name,$today){
-	$len = sizeof($stock_name);
-	echo $len;
-	while($len-- > 0){
-		$name = $stock_name[$len];
-		$sql = "select * from `stock_data` where stock_name like '%$name%' order by date desc limit 1";
-		#echo $sql;
-		$res = Run_sql($sql);
-		while($row = mysql_fetch_row($res)){
-			$stock_level = $list[$name] / $row[7] * 100;
+function position($list,$today){
+	$sql_del = "delete from stock_extend where date = '$today'";
+	echo $sql;
+	$res = Run_sql($sql_del);
+	$sql_position = "select * from `stock_data` where date = '$today'";
+	echo $sql_position;
+	$res = Run_sql($sql_position);
+	#print_r($res);
+	$flag = 0;
+	while($row = mysql_fetch_row($res)){
+		#print_r($row);
+		echo "<br>";
+		echo $flag++;
+		echo "<br>";
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+			#echo "yes";
+			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name = $stock_code[0];
+		echo "<br>";
+		echo $name;
+		echo "<br>";
+		$stock_level = $row[7] / $list[$name] * 100 - 100;
 			#echo "<br>";
 			#echo $stock_level;
 			#echo "<br>";
-			$sql = "update stock_data set price_level = '$stock_level' where stock_name like '%$name%' and date = '$today'";
-			$res = Run_sql($sql);
-			if ($stock_level < 30){
-				$string = substr($stock_name[$len], 1, 2).substr($stock_name[$len], 4, -1);
-				$url = 'xueqiu.com/S/'.$string;
-				echo "<li class='show'><a href='http://$url' style='color:#ddd'>$stock_name[$len]</a></li>";
-			}
-		}	
-	}
+		$sql_insert = "insert into stock_extend (stock_name, date, history_lowest_price, price_level) values ('$name', '$today', '$list[$name]', '$stock_level')";
+		echo $sql_insert;
+		echo "############";
+		echo "<br>";
+		$res_1 = Run_sql($sql_insert);
+		if ($stock_level < 30){
+			$string = substr($name, 1, 2).substr($name, 4, -1);
+			$url = 'xueqiu.com/S/'.$string;
+			echo "<li class='show'><a href='http://$url' style='color:#ddd'>$name</a></li>";
+		}
+	}	
 }
 
-$stock_name = all_stock($today);
+#$stock_name = all_stock($yesterday);
 #print_r($stock_name);
+echo "<br>";
 echo 'ALL_STOCK DONE!!!!';
+echo "<br>";
 
 #$list = stock_price_min($stock_name);
 #print_r($list);
 
-$list = stock_price_min_yesterday($stock_name,$yesterday,$today);
+
+$list = stock_price_min_yesterday($today);
 #print_r($list);
+echo "<br>";
 echo 'LIST DONE!!!';
+echo "<br>";
 
-update_lowest_price($list,$today);
+/*
+update_lowest_price($list,$yesterday);
+echo "<br>";
 echo 'UPDATE DATA DONE';
+echo "<br>";
+*/
 
-position($list,$stock_name,$today);
+position($list,$today);
+echo "<br>";
 echo 'POSITION DONE!!!!';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+echo "<br>";
 
 
 

@@ -53,6 +53,9 @@
 		<li class="list">
 			<a href="total_performance.php" style="text-align:center;color:#ddd">今日股票表现</a>
 		</li>
+		<li class="list">
+			<a href="above_all_increase.php" style="text-align:center;color:#ddd">涨幅高于全部股票加权涨幅的股票</a>
+		</li>
 	</ul>
 
 	<div class="wrap">
@@ -97,6 +100,9 @@
 	</div>
 	<div class="wrap1">
 		<a href="above_5average.php" style="text-align:center;color:#ddd">当前价格在5日均线上</a>
+	</div>
+	<div class="wrap1">
+		<a href="above_average_perform.php" style="text-align:center;color:#ddd">当日价格>5日均线 & 涨幅高于加权涨幅</a>
 	</div>
 
 

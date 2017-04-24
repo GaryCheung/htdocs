@@ -35,7 +35,7 @@
 </head>
 
 <body bgcolor="#32425c">
-	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">股票价格位置</h1>
+	<h1 style="font-family:Open Sans;text-align:center;color:#fff;font-size:60px;margin:25px">股价在5日均线之上(运行时间：1小时30分钟)</h1>
 
 	<div class="wrapper">
 		<a href="/showdata/showall.php" style="text-align:left;color:#ddd">首页</a>
@@ -86,7 +86,11 @@ function get_5average($today,$stock_name){
 	$len = sizeof($stock_name);
 	echo $len;
 	echo "<br>";
+	$flag = 0;
 	while($len-- > 0){
+		echo "<br>";
+		echo $flag++;
+		echo "<br>";
 		$name = $stock_name[$len];
 		$sql = "select * from `stock_data` where date <= '$today' and source = 'xueqiu' and stock_name like '%$name%' order by date desc limit 5";
 		$res = Run_sql($sql);
@@ -100,22 +104,24 @@ function get_5average($today,$stock_name){
 	return $list;
 }
 
-function above_5average($today,$stock_name,$list){
-	$len = sizeof($stock_name);
-	echo $len;
-	echo "<br>";
+function above_5average($today,$list){
 	$i = 0;
-	while($len-- > 0){
-		$name = $stock_name[$len];
+	$sql = "select * from `stock_data` where date = '$today' and source = 'xueqiu'";
+	#echo $sql;
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+			#echo "yes";
+			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name = $stock_code[0];
 		#echo $name;
-		$sql = "select * from `stock_data` where date = '$today' and source = 'xueqiu' and stock_name like '%$name%'";
-		#echo $sql;
-		$res = Run_sql($sql);
-		while($row = mysql_fetch_row($res)){
-			if ($list[$name] < $row[7]){
+		#echo "<br>";
+		if ($list[$name] < $row[7] && $list[$name] != 0){
 				$result[$i++] = $name;
 			}
-		}
 	}
 	return $result;
 }
@@ -143,57 +149,25 @@ function Insert_data($result,$today){
 	}
 }
 
-$stock_name = all_stock($yesterday);
+$stock_name = all_stock($today);
 #print_r($stock_name);
 echo "<br>";
 echo "ALL_STOCK DONE!!!!";
 echo "<br>";
 
-$list = get_5average($yesterday,$stock_name);
+$list = get_5average($today,$stock_name);
 print_r($list);
 echo "<br>";
 echo "GET_5AVERAGE DONE!!!";
 echo "<br>";
 
-$result = above_5average($yesterday,$stock_name,$list);
+$result = above_5average($today,$list);
 print_r($result);
 echo "<br>";
 echo "ABOVE_5AVERAGE DONE!!!";
 echo "<br>";
 
-Insert_data($result,$yesterday);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Insert_data($result,$today);
 
 
 
