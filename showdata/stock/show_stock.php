@@ -5,6 +5,7 @@
 		text-align: center;
 		list-style: none;
 		margin: 5px;
+		margin-top: 10px;
 	}
 
 
@@ -33,28 +34,19 @@
 			<a href="/showdata/showall.php" style="text-align:center;color:#ddd">首页</a>
 		</li>
 		<li class="list">
-			<a href="stock_quantity_list.php" style="text-align:center;color:#ddd">雪球股票成交量</a>
+			<a href="stock_quantity_list.php" style="text-align:center;color:#dd0">雪球股票成交量</a>
 		</li>
 		<li class="list">
-			<a href="stock_amplitude_list.php" style="text-align:center;color:#ddd">雪球股票振幅</a>
+			<a href="stock_amplitude_list.php" style="text-align:center;color:#dd0">雪球股票振幅</a>
 		</li>
 		<li class="list">
-			<a href="stock_holder.php" style="text-align:center;color:#ddd">我的持仓</a>
+			<a href="stock_holder.php" style="text-align:center;color:#dd0">我的持仓</a>
 		</li>
 		<li class="list">
-			<a href="stock_holder_analysis.php" style="text-align:center;color:#ddd">我的持仓分析</a>
+			<a href="stock_holder_analysis.php" style="text-align:center;color:#dd0">我的持仓分析</a>
 		</li>
 		<li class="list">
-			<a href="vertual_holder_analysis.php" style="text-align:center;color:#ddd">模拟持仓分析</a>
-		</li>
-		<li class="list">
-			<a href="score.php" style="text-align:center;color:#ddd">得分最高100股</a>
-		</li>
-		<li class="list">
-			<a href="total_performance.php" style="text-align:center;color:#ddd">今日股票表现</a>
-		</li>
-		<li class="list">
-			<a href="above_all_increase.php" style="text-align:center;color:#ddd">涨幅高于全部股票加权涨幅的股票</a>
+			<a href="vertual_holder_analysis.php" style="text-align:center;color:#dd0">模拟持仓分析</a>
 		</li>
 	</ul>
 
@@ -98,12 +90,26 @@
 	<div class="wrap1">
 		<a href="position.php" style="text-align:center;color:#ddd">股票价格位置</a>
 	</div>
-	<div class="wrap1">
-		<a href="above_5average.php" style="text-align:center;color:#ddd">当前价格在5日均线上</a>
+
+	<div class="wrap2">
 	</div>
-	<div class="wrap1">
-		<a href="above_average_perform.php" style="text-align:center;color:#ddd">当日价格>5日均线 & 涨幅高于加权涨幅</a>
-	</div>
+	<ul class="list">
+		<li class="list">
+			<a href="total_performance.php" style="text-align:center;color:#ff6100">今日股票表现</a>
+		</li>
+		<li class="list">
+			<a href="above_all_increase.php" style="text-align:center;color:#ff6100">涨幅高于全部股票加权涨幅的股票</a>
+		</li>
+		<li class="list">
+			<a href="above_5average.php" style="text-align:center;color:#ff6100">当前价格在5日均线上</a>
+		</li>
+		<li class="list">
+			<a href="above_average_perform.php" style="text-align:center;color:#ff6100">当日价格>5日均线 & 涨幅高于加权涨幅</a>
+		</li>
+		<li class="list">
+			<a href="score.php" style="text-align:center;color:#ff6100">得分最高100股</a>
+		</li>
+	</ul>
 
 
 

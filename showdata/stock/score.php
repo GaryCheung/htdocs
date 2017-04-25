@@ -171,13 +171,20 @@ function Insert_data($score,$today){
 		$url = 'xueqiu.com/S/'.$string;
 		echo "<li class='show'><a href='http://$url' style='color:#ddd'>$key 得分 $value</a></li>";	
 	}
+	$sql = "delete from score where date = '$today'";
+	echo $sql; 
+	Run_sql($sql);
 	foreach ($score as $key => $value) {
-		$sql = "insert into score (name, date, score) values ('$key', '$today', ‘$value’)";
+		$sql = "insert into score (name, date, score) values ('$key', '$today', '$value')";
+		#echo $sql;
 		$res = Run_sql($sql);
 	}
 }
 
 function Analysis($score,$today){
+	$sql = "delete from analysis where date = '$today' and reason = 'score100'";
+	echo $sql;
+	Run_sql($sql);
 	$score_out = array_slice($score, 0, 100);
 	foreach ($score_out as $key => $value) {
 		$sql = "insert into analysis (name, date, reason) values ('$key', '$today', 'score100')";
@@ -208,6 +215,11 @@ $stock = Diff_stock($today);
 $score = Score($weight,$today,$stock);
 #print_r($score);
 arsort($score);
+#print_r($score);
+$len = sizeof($score);
+echo "<br>";
+echo $len;
+echo "<br>";
 
 Insert_data($score,$today);
 

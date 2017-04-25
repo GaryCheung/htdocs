@@ -51,7 +51,7 @@ $yesterday = date("Y-m-d",strtotime("-1 day"));
 echo $yesterday;
 $before_yesterday = date("Y-m-d",strtotime("-2 day"));
 
-$date = '2017-04-18';
+$date = '2017-04-24';
 
 function Run_sql($sql){
 	$conn=mysql_connect("localhost","root","root");
@@ -138,7 +138,7 @@ function stock_price_min_yesterday($today){
 	#echo $sql;
 	$res = Run_sql($sql_stock_min);
 	while($row = mysql_fetch_row($res)){
-		$price_min = $row[11];
+		$price_min = $row[3];
 		$name = $row[1];
 		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
 			{
@@ -254,7 +254,7 @@ echo "<br>";
 echo 'ALL_STOCK DONE!!!!';
 echo "<br>";
 
-#$list = stock_price_min($stock_name);
+#$list = stock_price_min($stock_name,$date);
 #print_r($list);
 
 
