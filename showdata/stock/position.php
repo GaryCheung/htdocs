@@ -231,7 +231,7 @@ function position($list,$today){
 		echo "<br>";
 		echo $name;
 		echo "<br>";
-		$stock_level = $row[7] / $list[$name] * 100 - 100;
+		$stock_level = ($row[7] - $list[$name]) / $list[$name] * 100 ;
 			#echo "<br>";
 			#echo $stock_level;
 			#echo "<br>";

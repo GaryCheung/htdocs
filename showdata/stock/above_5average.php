@@ -104,6 +104,43 @@ function get_5average($today,$stock_name){
 	return $list;
 }
 
+function get_date($today){
+	$sql = "select distinct(date) from stock_data where date <= '$today' order by date desc limit 5";
+	#echo $sql;
+	$res = Run_sql($sql);
+	$i = 0;
+	while($row = mysql_fetch_row($res)){
+		$date[$i++] = $row[0];
+		#print_r($date);
+		#echo $date;
+	}
+	return $date;
+}
+
+function get_5average_simple($date){
+	$len = sizeof($date);
+	while ($len-- > 0){
+		$sql = "select * from stock_data where date = '$date[$len]'";
+		echo "<br>";
+		echo "5_AVERAGE_PERIOD------";
+		echo $sql;
+		echo "<br>";
+		$res = Run_sql($sql);
+		while($row = mysql_fetch_row($res)){
+			if (preg_match("/\(+\w*\W+\w*\)+/", $row[1], $stock_code)){
+				#echo "yes";
+				#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+			$name = $stock_code[0];
+			$data[$len][$name] = $row[7];
+		}
+	}
+	foreach ($data[0] as $key => $value) {
+		$average[$key] = ($value + $data[1][$key] + $data[2][$key] + $data[3][$key] + $data[4][$key]) / 5;
+	}
+	return $average;
+}
+
 function above_5average($today,$list){
 	$i = 0;
 	$sql = "select * from `stock_data` where date = '$today' and source = 'xueqiu'";
@@ -155,14 +192,16 @@ echo "<br>";
 echo "ALL_STOCK DONE!!!!";
 echo "<br>";
 
-$list = get_5average($today,$stock_name);
-print_r($list);
+#$list = get_5average($today,$stock_name);
+$date = get_date($today);
+$list = get_5average_simple($date);
+#print_r($list);
 echo "<br>";
 echo "GET_5AVERAGE DONE!!!";
 echo "<br>";
 
 $result = above_5average($today,$list);
-print_r($result);
+#print_r($result);
 echo "<br>";
 echo "ABOVE_5AVERAGE DONE!!!";
 echo "<br>";
