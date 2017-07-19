@@ -27,7 +27,10 @@
 				<a href="./vegetable/show_vegetable.php" style="text-align:center;color:#ddd">菜价</a>
 			</li>
 			<li class="list">
-				<a href="./stock/show_stock.php" style="text-align:center;color:#ddd">股票</a>
+				<a href="./stock/show_stock.php" style="text-align:center;color:#ddd">旧版股票</a>
+			</li>
+			<li class="list">
+				<a href="./stock/show_stock_v2.0.php" style="text-align:center;color:#ddd">新版股票</a>
 			</li>
 			<li class="list">
 				<a href="./currency/show_currency.php" style="text-align:center;color:#ddd">汇率</a>

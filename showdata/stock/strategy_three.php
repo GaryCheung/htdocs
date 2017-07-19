@@ -96,7 +96,10 @@ function strategy_three($date){
 	}
 	#print_r($price_level);
 
-	$sql = "select * from analysis where date = '$date[$len]' and reason like '%hongsanbing%'";
+	echo "########";
+	echo $date[0];
+	echo "<br>";
+	$sql = "select * from analysis where date = '$date[0]' and reason like '%hongsanbing%'";
 	$res = Run_sql($sql);
 	while($row = mysql_fetch_row($res)){
 		if (preg_match("/\(+\w*\W+\w*\)+/", $row[1], $stock_code)){
@@ -107,7 +110,7 @@ function strategy_three($date){
 		$hongsanbing[$name] = 1;
 	}
 
-	$sql = "select * from analysis where date = '$date[$len]' and reason like '%tunmo%'";
+	$sql = "select * from analysis where date = '$date[0]' and reason like '%tunmo%'";
 	$res = Run_sql($sql);
 	while($row = mysql_fetch_row($res)){
 		if (preg_match("/\(+\w*\W+\w*\)+/", $row[1], $stock_code)){

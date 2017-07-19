@@ -54,11 +54,11 @@
 
 <?php
  #######  参数设置区。 ratio涨幅比利，例如：0.05表示上涨5%  ########    
-$ratio = 0.02; 
+$ratio = 0.00; 
 $out_ratio=$ratio*100;  
 
 $factor_reason = ['chosen','amplitude','goldx','low_quantity_drop','max_quantity','gold5_10x','citou','tunmo','hongsanbing','blank','score100','above_5average','above_average_perform','distance_positive'];
-$factor_test = $factor_reason[1];
+$factor_test = $factor_reason[0];
 
 $today = date("Y-m-d");
 $day = 15; 
