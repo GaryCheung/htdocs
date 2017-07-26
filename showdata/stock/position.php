@@ -235,7 +235,7 @@ function position($list,$today){
 			#echo "<br>";
 			#echo $stock_level;
 			#echo "<br>";
-		$sql_insert = "insert into stock_extend (stock_name, date, history_lowest_price, price_level) values ('$name', '$today', '$list[$name]', '$stock_level')";
+		$sql_insert = "insert into stock_extend (stock_name, date, history_lowest_price, price_level, flag) values ('$name', '$today', '$list[$name]', '$stock_level', 'v1.0')";
 		echo $sql_insert;
 		echo "############";
 		echo "<br>";
