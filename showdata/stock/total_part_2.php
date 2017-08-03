@@ -1030,7 +1030,12 @@ function Price_increase_range($increase_range){
 			$price_increase_range['涨停']++;
 		}
 	}
-	
+	foreach ($price_increase_range as $key => $value) {
+		echo "<br>";
+		echo $key;
+		echo "  ------------------>";
+		echo $value;
+	}
 	return $price_increase_range;
 }
 
@@ -1432,7 +1437,7 @@ $stock_array = Stock_array_default($list);
 $stock_data = Get_all_stock_data($date_array[0]);
 #print_r($stock_data);
 
-
+/*
 #############  近10日最大振幅  ####################
 $max_amplitude = Get_max_amplitude($days_amplitude,$date_array,$list);
 #print_r($max_amplitude);
@@ -1599,7 +1604,7 @@ echo "------>  Result Number ::";
 echo sizeof($blank_increase);
 Change_line();
 
-/*
+*/
 #################   价格位置    ########################
 $days_price_level = 100;     # 近100天价格位置
 
@@ -1610,10 +1615,11 @@ Change_line();
 echo sizeof($list);
 Change_line();
 
-echo "#################   价格位置    #######################";
-Change_line(); 
-print_r($price_level[0]);
-Change_line();
+
+#echo "#################   价格位置    #######################";
+#Change_line(); 
+#print_r($price_level[0]);
+#Change_line();
 #echo "#################   收盘价格    #######################";
 #print_r($price_level[1]);
 #Change_line();
@@ -1638,6 +1644,7 @@ $price_increase_range = Price_increase_range($price_increase_today);
 #print_r($price_increase_range);
 #Change_line();
 
+Change_line();
 echo "Rule 11 ---> stock increase range"; 
 Change_line();
 
@@ -1660,7 +1667,7 @@ $price_today = Get_all_stock_data($today);
 #Change_line();
 
 $drop_50 = Drop_50($price_max, $price_today);
-print_r($drop_50);
+#print_r($drop_50);
 
 Insert_data($drop_50, $date_array, 0, 'drop_50');
 
@@ -1677,6 +1684,7 @@ $performance_today = Performance_today($today, $list);
 
 Insert_data_analysis($performance_today, 'total_new', $date_array, $begin);
 
+Change_line();
 echo "Rule 13 ---> Today total_stock performance"; 
 Change_line();
 echo "------>  Result ::";
@@ -1696,68 +1704,6 @@ echo "------>  Result Number ::";
 echo sizeof($above_total_performance);
 Change_line();
 
-
-######################    ----------STRATEGY---------    ########################
-####################    策略 1：收盘价高于5日均线  &&  涨幅高于全部股票加权涨幅    ########################
-$above_5_above_total = Above_5_above_total($stock_above_5_average, $above_total_performance);
-#print_r($above_5_above_total);
-
-Insert_data($above_5_above_total, $date_array, $begin, 'above_5_above_total');
-
-echo "Strategy 1 ---> Above 5_average line && above total stock average performance"; 
-Change_line();
-echo "------>  Result Number ::";
-echo sizeof($above_5_above_total);
-Change_line();
-
-
-
-####################    策略 2：收盘价高于5日均线  &&  涨幅高于全部股票加权涨幅  &&  股票上涨   ########################
-$above_5_above_total_increase = Above_5_above_total_increase($above_5_above_total, $list, $date_array[$begin]);
-#print_r($above_5_above_total_increase);
-
-Insert_data($above_5_above_total_increase, $date_array, $begin, 'above_5_above_total_increase');
-
-echo "Strategy 2 ---> Above 5_average line && above total stock average performance  &&  Increase"; 
-Change_line();
-echo "------>  Result Number ::";
-echo sizeof($above_5_above_total_increase);
-Change_line();
-
-
-####################    策略 3：收盘价在历史低位  && 放量上涨  ########################
-$lowest_increase = Lowest_increase_quantity($price_level[0], $price_increase_today, $max_quantity);
-Change_line();
-print_r($lowest_increase);
-
-Insert_data($lowest_increase, $date_array, $begin, 'lowest_increase');
-
-echo "Strategy 3 ---> At_bottom && increase "; 
-Change_line();
-echo "------>  Result Number ::";
-echo sizeof($lowest_increase);
-Change_line();
-
-
-
-####################    策略 4：收盘价在历史低位  && 吞没||刺透  ########################
-$lowest_citou_tunmo = Lowest_citou_tunmo($price_level[0], $is_citou, $is_tunmo);
-print_r($lowest_citou_tunmo);
-
-Insert_data($lowest_citou_tunmo, $date_array, $begin, 'lowest_citou_tunmo');
-
-echo "Strategy 4 ---> At_bottom && citou or tunmo "; 
-Change_line();
-echo "------>  Result Number ::";
-echo sizeof($lowest_citou_tunmo);
-Change_line();
-
-
-####################    策略 5：红三兵  &&  逐日放量  ########################
-$day_by_day = Increase_day_by_day_3($today, $list);
-print_r($day_by_day);
-
-*/
 
 echo "<br>";
 ?>
