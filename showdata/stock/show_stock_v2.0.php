@@ -36,20 +36,17 @@
 	</ul>
 
 	<div class="wrap">
-		<a href="total.php" style="text-align:center;color:#ddd">运行全部程序</a>
-	</div>
-	<div class="wrap1">
-		<a href="today_chosen_stock.php" style="text-align:center;color:#ddd">今日股票</a>
+		<a href="total.php" style="text-align:center;color:#ddd">运行程序 PART 1</a>
 	</div>
 
 	<div class="wrap2">
 	</div>
 	<ul class="list">
 		<li class="list">
-			<a href="score.php" style="text-align:center;color:#ff6100">得分最高100股</a>
+			<a href="total_part_2.php" style="text-align:center;color:#ddd">运行程序 PART 2</a>
 		</li>
 		<li class="list">
-			<a href="strategy_amplitude_increase.php" style="text-align:center;color:#ff6100">成交量 > 0 & 涨幅 > 0 </a>
+			<a href="strategy_total.php" style="text-align:center;color:#ff6100">运行买入策略</a>
 		</li>
 	</ul>
 
