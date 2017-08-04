@@ -43,6 +43,9 @@
 
 
 <?php
+#error_reporting(E_ALL ^ E_DEPRECATED);
+error_reporting(E_ALL || ~E_NOTICE);
+set_time_limit(0);
 
 ############ 参数区  ###############
 $period = 10;
@@ -1403,8 +1406,8 @@ function Insert_data($result,$date_array,$begin,$reason){
 	*/
 	foreach ($insert_data as $key => $value) {
 		$sql = "insert into new_stock_performance (stock_name, value, reason, date) values ('$key', '$value', '$reason', '$date_array[$begin]')";
-		echo $sql;
-		Change_line();
+		#echo $sql;
+		#Change_line();
 		$res = Run_sql($sql);
 	}
 	
@@ -1430,7 +1433,7 @@ $stock_array = Stock_array_default($list);
 $stock_data = Get_all_stock_data($date_array[0]);
 #print_r($stock_data);
 
-/*
+
 #############  近10日最大振幅  ####################
 $max_amplitude = Get_max_amplitude($days_amplitude,$date_array,$list);
 #print_r($max_amplitude);
@@ -1452,7 +1455,7 @@ $average_5_today = Average_5($date_array,$list);
 #print_r($average_5_today);
 
 $stock_above_5_average = Above_5_average($average_5_today,$date_array);
-print_r($stock_above_5_average);
+#print_r($stock_above_5_average);
 
 Insert_data($stock_above_5_average,$date_array,0,'above_5_average');
 
@@ -1597,7 +1600,7 @@ echo "------>  Result Number ::";
 echo sizeof($blank_increase);
 Change_line();
 
-*/
+
 #################   价格位置    ########################
 $days_price_level = 100;     # 近100天价格位置
 
@@ -1624,7 +1627,7 @@ echo "------>  Result Number ::";
 echo sizeof($price_level[0]);
 Change_line();
 
-/*
+
 #################   今日价格涨幅分布    ########################
 $date_array_price_range = Get_date(1,$today);
 
@@ -1668,7 +1671,7 @@ echo "------>  Result Number ::";
 echo sizeof($drop_50);
 Change_line();
 
-*/
+
 #################   今日所有股票平均涨幅    ########################
 $performance_today = Performance_today($today, $list);
 #print_r($performance_today);
@@ -1694,7 +1697,7 @@ echo "------>  Result Number ::";
 echo sizeof($above_total_performance);
 Change_line();
 
-/*
+
 ######################    ----------STRATEGY---------    ########################
 ####################    策略 1：收盘价高于5日均线  &&  涨幅高于全部股票加权涨幅    ########################
 $above_5_above_total = Above_5_above_total($stock_above_5_average, $above_total_performance);
@@ -1750,7 +1753,7 @@ echo "------>  Result Number ::";
 echo sizeof($lowest_citou_tunmo);
 Change_line();
 
-
+/*
 ####################    策略 5：红三兵  &&  逐日放量  ########################
 $day_by_day = Increase_day_by_day_3($today, $list);
 print_r($day_by_day);
