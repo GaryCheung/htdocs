@@ -1422,6 +1422,9 @@ $date_array = Get_date($days_amplitude,$today);
 #print_r($date_array);
 #Change_line();
 
+$today_array = Get_date(1,$today);
+$today = $today_array[0];
+
 $list = Stock_list($date_array);
 #print_r($list);
 #Change_line();
@@ -1600,7 +1603,7 @@ echo "------>  Result Number ::";
 echo sizeof($blank_increase);
 Change_line();
 
-
+/*
 #################   价格位置    ########################
 $days_price_level = 100;     # 近100天价格位置
 
@@ -1753,7 +1756,7 @@ echo "------>  Result Number ::";
 echo sizeof($lowest_citou_tunmo);
 Change_line();
 
-/*
+
 ####################    策略 5：红三兵  &&  逐日放量  ########################
 $day_by_day = Increase_day_by_day_3($today, $list);
 print_r($day_by_day);

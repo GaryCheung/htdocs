@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL || ~E_NOTICE);
+set_time_limit(0);
+
 $currency = $_COOKIE["currency"];
 # echo $currency;
 

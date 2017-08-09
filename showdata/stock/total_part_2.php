@@ -43,7 +43,7 @@
 
 
 <?php
-
+error_reporting(E_ALL || ~E_NOTICE);
 set_time_limit(0);
 
 ############ 参数区  ###############
@@ -985,7 +985,7 @@ function Price_increase_range($increase_range){
 	
 	foreach ($increase_range as $key => $value){
 		if ($value < -9.90){
-			$price_increase_range['跌停'] = $key;
+			$price_increase_range['跌停']++;
 		}else if ($value >= -9.90 && $value < -9){
 			$price_increase_range['-10 ~ -9']++;
 		}else if ($value >= -9 && $value < -8){
@@ -1425,6 +1425,9 @@ $date_array_10_average = Get_date($days_10_average,$today);
 $date_array = Get_date($days_amplitude,$today);
 #print_r($date_array);
 #Change_line();
+
+$today_array = Get_date(1,$today);
+$today = $today_array[0];
 
 $list = Stock_list($date_array);
 #print_r($list);

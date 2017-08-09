@@ -43,7 +43,7 @@
 
 
 <?php
-
+error_reporting(E_ALL || ~E_NOTICE);
 set_time_limit(0);
 
 ############ 参数区  ###############
@@ -1294,6 +1294,139 @@ function Is_3_red_day_by_day($day_by_day, $today){
 	return $result;
 }
 
+function Lowest_highest_price($today, $list){
+	foreach ($list as $value) {
+		$price_high[$value] = 0;
+		$price_low[$value] = 0;
+	}
+	foreach ($list as $value) {
+		$sql = "select * from stock_data where stock_name like '%$value%'";
+		$res = Run_sql($sql);
+		while($row = mysql_fetch_row($res)){
+			$price_name[$value] = $row[1];
+			#echo $i++;
+			#Change_line();
+			#print_r($row);
+			if ($price_high[$value] < $row[8]){
+				$price_high[$value] = $row[8];
+				$price_high_date[$value] = $row[4];
+			}
+			if ($price_low[$value] > $row[9] || $price_low[$value] == 0){
+				$price_low[$value] = $row[9];
+				$price_low_date[$value] = $row[4];
+			}
+		}
+	}
+	$result['low'] = $price_low;
+	$result['high'] = $price_high;
+	$result['name'] = $price_name;
+	$result['high_date'] = $price_high_date;
+	$result['low_date'] = $price_low_date;
+	return $result;
+}
+
+function Lowest_highest_price_simple($today, $list){
+	foreach ($list as $value) {
+		$sql = "select * from stock_data where stock_name like '%$value%' order by date desc limit 1";
+		$res = Run_sql($sql);
+		while($row = mysql_fetch_row($res)){
+			$price_today_high[$value] = $row[8];
+			$price_today_low[$value] = $row[9];
+		}
+
+		$sql = "select * from stock_price_extreme where stock_name like '%$value%' order by date desc limit 1";
+		$res = Run_sql($sql);
+		while($row = mysql_fetch_row($res)){
+			if ($price_today_high[$value] > $row[3]){
+				$price_high[$value] = $price_today_high[$value];
+				$price_high_date[$value] = $today;
+				$price_name[$value] = $row[1];
+			}else{
+				$price_high[$value] = $row[3];
+				$price_high_date[$value] = $row[5];
+				$price_name[$value] = $row[1];
+			}
+			if ($price_today_low[$value] < $row[4]){
+				$price_low[$value] = $price_today_low[$value]; 
+				$price_low_date[$value] = $today;
+				$price_name[$value] = $row[1];
+			}else{
+				$price_low[$value] = $row[4];
+				$price_high_date[$value] = $row[6];
+				$price_name[$value] = $row[1];
+			}
+		}
+	}
+	$result['high'] = $price_high;
+	$result['low'] = $price_low;
+	$result['name'] = $price_name;
+	$result['high_date'] = $price_high_date;
+	$result['low_date'] = $price_low_date;
+ 	return $result;
+}
+
+function Amplitude_above_3($today){
+	$sql = "select * from stock_data where date = '$today'";
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		if ($row[2] > 3){
+			if ($row[9] < $row[6] && $row[8] > $row[6]){
+				$amplitude_today[$row[1]] = $row[1];
+			}
+		}
+	}	
+	return $amplitude_today;
+}
+
+function Quantity_more_than_5($today, $yesterday){
+	$sql = "select * from stock_data where date = '$today'";
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		#print_r($row);
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+				#echo "yes";
+				#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name_code = $stock_code[0];
+		$quantity_today[$name_code] = $row[3];
+	}
+
+	$sql = "select * from stock_data where date = '$yesterday'";
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		#print_r($row);
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+				#echo "yes";
+				#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name_code = $stock_code[0];
+		$quantity_yesterday[$name_code] = $row[3];
+	}
+
+	foreach ($quantity_today as $key => $value) {
+		if ($quantity_yesterday[$key] > 0){
+			if ($quantity_today[$key] / $quantity_yesterday[$key] > 5){
+				$result[$key] = $quantity_today[$key] / $quantity_yesterday[$key];
+			}
+		}else{
+			$sql = "select * from stock_data where date < '$today' and stock_name like '%$key%' order by date desc limit 1";
+			$res = Run_sql($sql);
+			while($row = mysql_fetch_row($res)){
+				if ($quantity_today[$key] / $row[3] > 5){
+					$result[$key] = $quantity_today[$key] / $row[3];
+				}
+			}
+		}
+	}
+	return $result;
+}
+
+
+
 
 function Insert_data_analysis($stock_analysis, $reason, $date_array, $begin){
 	$sql = "delete from analysis where date = '$date_array[$begin]' and reason = '$reason'";
@@ -1425,6 +1558,32 @@ function Position($date){
 }
 */
 
+function Max_chosen($list, $today){
+	foreach ($list as $value) {
+		$count_chosen[$value] = 0;
+	}
+
+	$sql = "select * from new_stock_performance where date = '$today'";
+	#echo $sql;
+	#Change_line();
+	$res = Run_sql($sql);
+	while($row = mysql_fetch_row($res)){
+		#echo $i++;
+		#Change_line();
+		#print_r($row);
+		$name = $row[1];
+		if (preg_match("/\(+\w*\W+\w*\)+/", $name, $stock_code))
+			{
+			#echo "yes";
+			#print_r($stock_code);              ##########   $stock_code[0]存储股票代码  ###########   
+			};
+		$name_code = $stock_code[0];
+		$count_chosen[$name_code]++;
+	}
+
+	return $count_chosen;
+}
+
 function Insert_data($result,$date_array,$begin,$reason){
 	#print_r($result);
 	#echo "BEGIN";
@@ -1463,7 +1622,7 @@ function Insert_data($result,$date_array,$begin,$reason){
 			echo $value;
 			Change_line();
 			*/
-			if ($key == $name_code){
+			if ($key == $name_code || $key == $row[1]){
 				$insert_data[$key] = $value; 
 				#echo "###########   FIND ONE   ##############";
 			}
@@ -1483,6 +1642,18 @@ function Insert_data($result,$date_array,$begin,$reason){
 	
 }
 
+function Insert_extreme($lowest_price, $highest_price, $lowest_date, $highest_date, $name, $today){
+	$sql = "delete from stock_price_extreme where date = '$today'";
+	echo $sql;
+	Run_sql($sql);
+	foreach ($name as $key => $value) {
+		$sql = "insert into stock_price_extreme (date, stock_name, highest_price, lowest_price, highest_date, lowest_date) values ('$today', '$value', '$highest_price[$key]', '$lowest_price[$key]', '$highest_date[$key]', '$lowest_date[$key]')";
+		#echo $sql;
+		#Change_line();
+		$res = Run_sql($sql);
+	}
+}
+
 ################  初始化参数   #####################
 $date_array_10_average = Get_date($days_10_average,$today);
 #print_r($date_array);
@@ -1491,6 +1662,10 @@ $date_array_10_average = Get_date($days_10_average,$today);
 $date_array = Get_date($days_amplitude,$today);
 #print_r($date_array);
 #Change_line();
+
+$today_array = Get_date(2,$today);
+$today = $today_array[0];
+$yesterday = $today_array[1];
 
 $list = Stock_list($date_array);
 #print_r($list);
@@ -1766,8 +1941,9 @@ Change_line();
 echo "------>  Result Number ::";
 echo sizeof($above_total_performance);
 Change_line();
-*/
 
+
+*/
 ######################    ----------STRATEGY---------    ########################
 ####################    策略 1：收盘价高于5日均线  &&  涨幅高于全部股票加权涨幅    ########################
 $above_5_above_total = Above_5_above_total($today);
@@ -1809,7 +1985,12 @@ echo "------>  Result Number ::";
 echo sizeof($lowest_increase);
 Change_line();
 
-
+foreach ($lowest_increase as $key => $value) {
+	echo "<br>";
+	echo "$key";
+	echo " ----------------->";
+	echo "$value";
+}
 
 ####################    策略 4：收盘价在历史低位  && 吞没||刺透  ########################
 $lowest_citou_tunmo = Lowest_citou_tunmo($today);
@@ -1823,6 +2004,12 @@ echo "------>  Result Number ::";
 echo sizeof($lowest_citou_tunmo);
 Change_line();
 
+foreach ($lowest_citou_tunmo as $key => $value) {
+	echo "<br>";
+	echo "$key";
+	echo " ----------------->";
+	echo "$value";
+}
 
 ####################    策略 5：红三兵  &&  逐日放量  ########################
 $day_by_day = Increase_day_by_day_3($today, $list);
@@ -1846,6 +2033,110 @@ echo "------>  Result Number ::";
 echo sizeof($is_3_red_day_by_day);
 Change_line();
 
+/*
+####################    策略 6(计算所有历史数据)：历史最高价 和 历史最低价  ########################
+$lowest_highest = Lowest_highest_price($today, $list);
+
+echo "###############  STOCK NAME  ################";
+Change_line();
+print_r($lowest_highest['name']);
+Change_line();
+
+echo "###############  LOWEST PRICE  ################";
+Change_line();
+print_r($lowest_highest['low']);
+Change_line();
+
+echo "###############  HIGHEST PRICE  ################";
+Change_line();
+print_r($lowest_highest['high']);
+Change_line();
+
+Insert_extreme($lowest_highest['low'], $lowest_highest['high'], $lowest_highest['low_date'], $lowest_highest['high_date'], $lowest_highest['name'], $today);
+
+echo "Strategy 6.1 ---> history lowest/highest price (based on all data)"; 
+Change_line();
+echo "------>  Result Number ::";
+echo sizeof($lowest_highest['name']);
+Change_line();
+
+*/
+####################    策略 6.2 (根据昨日数据)：历史最高价 和 历史最低价  ########################
+$lowest_highest_simple = Lowest_highest_price_simple($today, $list);
+/*
+echo "###############  STOCK NAME  ################";
+Change_line();
+print_r($lowest_highest_simple['name']);
+Change_line();
+
+echo "###############  LOWEST PRICE  ################";
+Change_line();
+print_r($lowest_highest_simple['low']);
+Change_line();
+
+echo "###############  HIGHEST PRICE  ################";
+Change_line();
+print_r($lowest_highest_simple['high']);
+Change_line();
+*/
+Insert_extreme($lowest_highest_simple['low'], $lowest_highest_simple['high'], $lowest_highest_simple['low_date'], $lowest_highest_simple['high_date'], $lowest_highest_simple['name'], $today);
+
+Change_line();
+echo "Strategy 6.2 ---> history lowest/highest price (based on yesterday data)"; 
+Change_line();
+echo "------>  Result Number ::";
+echo sizeof($lowest_highest_simple['name']);
+Change_line();
+
+
+####################    策略 7 当日振幅 大于 3%  ########################
+$amplitude_today = Amplitude_above_3($today);
+
+Change_line();
+echo "Strategy 7 ---> amplitude above 3%"; 
+Change_line();
+echo "------>  Result Number ::";
+echo sizeof($amplitude_today);
+Change_line();
+
+Insert_data($amplitude_today,$date_array,$begin,'amplitude_above_3%');
+
+####################    策略 8 交易量日环比 大于 5倍  ########################
+$quantity_more_5 = Quantity_more_than_5($today, $yesterday);
+
+Change_line();
+echo "Strategy 8 ---> quantity_today is 5 times more"; 
+Change_line();
+echo "------>  Result Number ::";
+echo sizeof($quantity_more_5);
+Change_line();
+
+Insert_data($quantity_more_5,$date_array,$begin,'quantity_5_times_more');
+
+foreach ($quantity_more_5 as $key => $value) {
+	echo "<br>";
+	echo "$key";
+	echo " ----------------->";
+	echo "$value";
+}
+
+####################    策略 9 符合筛选条件次数最多的股票  ########################
+$max_chosen = Max_chosen($list, $today);
+
+Change_line();
+echo "Strategy 9 ---> times of stock been chosen "; 
+
+foreach ($max_chosen as $key => $value) {
+	echo "<br>";
+	echo "$key";
+	echo " ----------------->";
+	echo "$value";
+}
+
+Insert_data($max_chosen,$date_array,$begin,'chosen_times');
+
+
+
 echo "<br>";
 ?>
 
@@ -1853,14 +2144,3 @@ echo "<br>";
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-

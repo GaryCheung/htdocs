@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL || ~E_NOTICE);
+set_time_limit(0);
+
 $conn=mysql_connect("localhost","root","root");
 if(!$conn){
 	echo "连接失败";
